@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clash Detection Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🚨 Clash Detection Dashboard</h1>
+                    <p class="subtitle">Real-time monitoring of clash detection activity</p>
+                </div>
+                <div class="header-right">
+                    <div class="last-updated">
+                        Last updated: <span id="lastUpdated">Loading...</span>
+                    </div>
+                    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                    <button class="refresh-btn" onclick="loadData()">🔄 Refresh</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Summary Cards -->
+        <section class="summary-section">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="card-icon">📊</div>
+                    <div class="card-content">
+                        <h3>Total Clashes</h3>
+                        <div class="card-value" id="totalClashes">0</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">❌</div>
+                    <div class="card-content">
+                        <h3>X Button Clicks</h3>
+                        <div class="card-value" id="totalXClicks">0</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">👥</div>
+                    <div class="card-content">
+                        <h3>Active Users</h3>
+                        <div class="card-value" id="uniqueUsers">0</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">🏗️</div>
+                    <div class="card-content">
+                        <h3>Projects</h3>
+                        <div class="card-value" id="uniqueProjects">0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <div class="charts-grid">
+                <!-- Daily Activity Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>📈 Daily Activity</h3>
+                        <p>Clash detection and X-click trends</p>
+                    </div>
+                    <canvas id="dailyActivityChart"></canvas>
+                </div>
+
+                <!-- User Activity Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>👥 User Activity</h3>
+                        <p>Activity by user</p>
+                    </div>
+                    <canvas id="userActivityChart"></canvas>
+                </div>
+
+                <!-- Project Distribution Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>🏗️ Project Distribution</h3>
+                        <p>Clashes by project</p>
+                    </div>
+                    <canvas id="projectChart"></canvas>
+                </div>
+
+                <!-- Hourly Pattern Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>⏰ Hourly Patterns</h3>
+                        <p>Activity by time of day</p>
+                    </div>
+                    <canvas id="hourlyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Tables Section -->
+        <section class="tables-section">
+            <div class="tables-grid">
+                <!-- Recent Activity -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>🕒 Recent Activity</h3>
+                        <p>Latest clash detection events</p>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="recentActivityTable">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>User</th>
+                                    <th>Project</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentActivityBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- User Statistics -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>👤 User Statistics</h3>
+                        <p>Per-user activity summary</p>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="userStatsTable">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Clashes</th>
+                                    <th>X-Clicks</th>
+                                    <th>Most Active Project</th>
+                                    <th>Last Activity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userStatsBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Project Statistics -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>📋 Project Statistics</h3>
+                        <p>Per-project clash summary</p>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="projectStatsTable">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Total Clashes</th>
+                                    <th>X-Clicks</th>
+                                    <th>Active Users</th>
+                                    <th>Last Clash</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectStatsBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Clash Detection Dashboard | JBB BIM EHAB AHMAD</p>
+                <p>Powered by GitHub Pages | Data updates automatically</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading dashboard data...</p>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚠️ Error Loading Data</h3>
+                <span class="close" onclick="closeErrorModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="errorMessage">Unable to load dashboard data. Please try again later.</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeErrorModal()">Close</button>
+                <button onclick="loadData()">Retry</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
