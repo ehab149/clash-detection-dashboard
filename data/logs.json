@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2025-07-01T17:12:41.7787647Z",
+  "lastUpdated": "2025-07-01T17:12:43.9411969Z",
   "summary": {
     "totalClashes": 2,
-    "totalXClicks": 12,
+    "totalXClicks": 13,
     "uniqueUsers": 1,
     "uniqueProjects": 1,
     "dateRange": {
@@ -14,7 +14,7 @@
     {
       "date": "2025-07-01",
       "clashes": 2,
-      "xClicks": 12,
+      "xClicks": 13,
       "users": [
         "ahmade"
       ],
@@ -27,16 +27,16 @@
     {
       "user": "ahmade",
       "totalClashes": 2,
-      "xClicks": 12,
+      "xClicks": 13,
       "mostActiveProject": "Test model",
-      "lastActivity": "2025-07-01T17:12:41.7787647Z"
+      "lastActivity": "2025-07-01T17:12:43.9411969Z"
     }
   ],
   "projectStats": [
     {
       "project": "Test model",
       "clashes": 2,
-      "xClicks": 12,
+      "xClicks": 13,
       "users": [
         "ahmade"
       ],
@@ -44,6 +44,13 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-07-01T17:12:43.9411969Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
     {
       "timestamp": "2025-07-01T17:12:41.7787647Z",
       "type": "x_click",
