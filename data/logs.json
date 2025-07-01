@@ -1,17 +1,212 @@
 {
-  "lastUpdated": "2025-07-01T18:02:28.0735881Z",
+  "lastUpdated": "2025-07-01T18:08:56.6959336Z",
   "summary": {
-    "totalClashes": 0,
-    "totalXClicks": 0,
-    "uniqueUsers": 0,
-    "uniqueProjects": 0,
+    "totalClashes": 5,
+    "totalXClicks": 17,
+    "uniqueUsers": 1,
+    "uniqueProjects": 2,
     "dateRange": {
       "start": "2025-07-01",
       "end": "2025-07-01"
     }
   },
-  "dailyStats": [],
-  "userActivity": [],
-  "projectStats": [],
-  "recentEvents": []
+  "dailyStats": [
+    {
+      "date": "2025-07-01",
+      "clashes": 5,
+      "xClicks": 17,
+      "users": [
+        "ahmade"
+      ],
+      "projects": [
+        "Test model",
+        "space test model-22"
+      ]
+    }
+  ],
+  "userActivity": [
+    {
+      "user": "ahmade",
+      "totalClashes": 5,
+      "xClicks": 17,
+      "mostActiveProject": "Test model",
+      "lastActivity": "2025-07-01T18:08:56.6932795Z"
+    }
+  ],
+  "projectStats": [
+    {
+      "project": "Test model",
+      "clashes": 2,
+      "xClicks": 13,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-07-01T17:12:37.7645261Z"
+    },
+    {
+      "project": "space test model-22",
+      "clashes": 3,
+      "xClicks": 4,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-07-01T18:08:56.6948482Z"
+    }
+  ],
+  "recentEvents": [
+    {
+      "timestamp": "2025-07-01T18:08:56.6922788Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Clash Detected"
+    },
+    {
+      "timestamp": "2025-07-01T17:46:36.3043371Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T17:46:33.9406664Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Clash Detected"
+    },
+    {
+      "timestamp": "2025-07-01T17:46:06.0541379Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T17:46:04.2799601Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T17:46:01.2988041Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T17:45:59.6174988Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Clash Detected"
+    },
+    {
+      "timestamp": "2025-07-01T17:12:43.9411969Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T17:12:41.7787647Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T17:12:39.5434288Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T17:12:37.7605263Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Clash Detected"
+    },
+    {
+      "timestamp": "2025-07-01T16:12:02.6640062Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:12:01.0880613Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:59.294373Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:57.7884473Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:55.9347567Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:53.2024816Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:51.4627553Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:48.7240353Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:46.2224302Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:42.8398342Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
+    {
+      "timestamp": "2025-07-01T16:11:41.1697994Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "Test model",
+      "action": "Clash Detected"
+    }
+  ]
 }
