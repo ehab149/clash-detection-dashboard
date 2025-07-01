@@ -1,9 +1,13 @@
-// Dashboard JavaScript
+// Enhanced Dashboard JavaScript for Unlimited Data Handling
 class ClashDashboard {
     constructor() {
         this.charts = {};
         this.data = null;
         this.theme = localStorage.getItem('theme') || 'light';
+        this.currentPage = 1;
+        this.eventsPerPage = 50;
+        this.dateFilter = this.getInitialFilter();
+        this.filteredData = null;
         this.init();
     }
 
@@ -11,28 +15,50 @@ class ClashDashboard {
         this.applyTheme();
         this.loadData();
         this.setupEventListeners();
+        this.setupFilters();
         
         // Auto-refresh every 5 minutes
         setInterval(() => this.loadData(), 5 * 60 * 1000);
     }
 
+    getInitialFilter() {
+        // Check URL for filter parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('filter') || 'all';
+    }
+
     setupEventListeners() {
-        // Theme toggle
         window.toggleTheme = () => this.toggleTheme();
-        
-        // Error modal
         window.closeErrorModal = () => this.closeErrorModal();
-        
-        // Load data
         window.loadData = () => this.loadData();
+        
+        // Pagination events
+        window.nextPage = () => this.nextPage();
+        window.prevPage = () => this.prevPage();
+        window.goToPage = (page) => this.goToPage(page);
+        
+        // Filter events  
+        window.filterByDate = (filter) => this.filterByDate(filter);
+        
+        // Global dashboard reference
+        window.dashboard = this;
+    }
+
+    setupFilters() {
+        // Set initial filter value
+        const filterSelect = document.getElementById('dateFilter');
+        if (filterSelect) {
+            filterSelect.value = this.dateFilter;
+        }
     }
 
     async loadData() {
         try {
             this.showLoading();
             
-            // Try to load from GitHub Pages data file
-            const response = await fetch('./data/logs.json');
+            // Add cache busting to ensure fresh data
+            const timestamp = new Date().getTime();
+            const response = await fetch(`./data/logs.json?t=${timestamp}`);
             
             if (!response.ok) {
                 // If no data file exists, use sample data
@@ -41,6 +67,12 @@ class ClashDashboard {
                 this.data = await response.json();
             }
             
+            // Show data statistics in console and UI
+            this.showDataStatistics();
+            
+            // Apply current filter
+            this.applyDateFilter();
+            
             this.updateDashboard();
             this.hideLoading();
             
@@ -48,83 +80,255 @@ class ClashDashboard {
             console.error('Error loading data:', error);
             this.showError('Failed to load dashboard data. Using sample data.');
             this.data = this.getSampleData();
+            this.applyDateFilter();
             this.updateDashboard();
             this.hideLoading();
         }
     }
 
-    getSampleData() {
-        // Sample data structure for demonstration
+    showDataStatistics() {
+        if (!this.data) return;
+        
+        const stats = this.calculateDataStatistics();
+        console.log('📊 Dashboard Data Statistics:', stats);
+        
+        // Update header subtitle with data info
+        const subtitle = document.querySelector('.subtitle');
+        if (subtitle) {
+            const totalEvents = this.data.recentEvents ? this.data.recentEvents.length : 0;
+            const dateRange = this.getDateRange();
+            subtitle.textContent = `Real-time monitoring | ${totalEvents.toLocaleString()} events | ${dateRange}`;
+        }
+
+        // Update footer stats
+        const footerStats = document.getElementById('footerStats');
+        if (footerStats && this.data.recentEvents) {
+            footerStats.textContent = `${this.data.recentEvents.length.toLocaleString()} events | Unlimited retention enabled`;
+        }
+
+        // Show performance notice for large datasets
+        this.checkPerformanceNotice();
+    }
+
+    checkPerformanceNotice() {
+        const totalEvents = this.data?.recentEvents?.length || 0;
+        const performanceNotice = document.getElementById('performanceNotice');
+        
+        if (totalEvents > 1000 && performanceNotice) {
+            performanceNotice.classList.remove('hidden');
+        } else if (performanceNotice) {
+            performanceNotice.classList.add('hidden');
+        }
+    }
+
+    calculateDataStatistics() {
+        if (!this.data) return {};
+        
+        const events = this.data.recentEvents || [];
+        const dailyStats = this.data.dailyStats || [];
+        
         return {
-            lastUpdated: new Date().toISOString(),
-            summary: {
-                totalClashes: 45,
-                totalXClicks: 12,
-                uniqueUsers: 3,
-                uniqueProjects: 5,
-                dateRange: {
-                    start: '2025-06-01',
-                    end: '2025-06-30'
-                }
-            },
-            dailyStats: [
-                { date: '2025-06-26', clashes: 5, xClicks: 2, users: ['User_001'], projects: ['Project_Alpha'] },
-                { date: '2025-06-27', clashes: 8, xClicks: 1, users: ['User_001', 'User_002'], projects: ['Project_Alpha', 'Project_Beta'] },
-                { date: '2025-06-28', clashes: 3, xClicks: 0, users: ['User_001'], projects: ['Project_Alpha'] },
-                { date: '2025-06-29', clashes: 12, xClicks: 4, users: ['User_001', 'User_003'], projects: ['Project_Alpha', 'Project_Gamma'] },
-                { date: '2025-06-30', clashes: 17, xClicks: 5, users: ['User_001', 'User_002', 'User_003'], projects: ['Project_Alpha', 'Project_Beta', 'Project_Gamma'] }
-            ],
-            userActivity: [
-                { user: 'User_001', totalClashes: 25, xClicks: 8, mostActiveProject: 'Project_Alpha', lastActivity: '2025-06-30T12:02:09Z' },
-                { user: 'User_002', totalClashes: 12, xClicks: 3, mostActiveProject: 'Project_Beta', lastActivity: '2025-06-30T10:15:22Z' },
-                { user: 'User_003', totalClashes: 8, xClicks: 1, mostActiveProject: 'Project_Gamma', lastActivity: '2025-06-30T09:45:11Z' }
-            ],
-            projectStats: [
-                { project: 'Project_Alpha', clashes: 20, xClicks: 7, users: ['User_001', 'User_002'], lastClash: '2025-06-30T12:02:09Z' },
-                { project: 'Project_Beta', clashes: 15, xClicks: 3, users: ['User_001', 'User_002', 'User_003'], lastClash: '2025-06-30T11:30:45Z' },
-                { project: 'Project_Gamma', clashes: 10, xClicks: 2, users: ['User_001', 'User_003'], lastClash: '2025-06-30T09:45:11Z' }
-            ],
-            recentEvents: [
-                { timestamp: '2025-06-30T12:02:09Z', type: 'x_click', user: 'User_001', project: 'Project_Alpha', action: 'Dialog Close Attempt (Prevented)' },
-                { timestamp: '2025-06-30T11:30:45Z', type: 'clash', user: 'User_002', project: 'Project_Beta', action: 'Clash Detected' },
-                { timestamp: '2025-06-30T11:15:22Z', type: 'x_click', user: 'User_001', project: 'Project_Alpha', action: 'Dialog Close Attempt (Prevented)' },
-                { timestamp: '2025-06-30T10:45:33Z', type: 'clash', user: 'User_003', project: 'Project_Gamma', action: 'Clash Detected' },
-                { timestamp: '2025-06-30T09:45:11Z', type: 'clash', user: 'User_003', project: 'Project_Gamma', action: 'Clash Detected' }
-            ]
+            totalEvents: events.length,
+            totalDays: dailyStats.length,
+            totalClashes: this.data.summary?.totalClashes || 0,
+            totalXClicks: this.data.summary?.totalXClicks || 0,
+            uniqueUsers: this.data.summary?.uniqueUsers || 0,
+            uniqueProjects: this.data.summary?.uniqueProjects || 0,
+            dateRange: this.getDateRange(),
+            dataSize: JSON.stringify(this.data).length
         };
     }
 
-    updateDashboard() {
-        this.updateSummaryCards();
-        this.updateCharts();
-        this.updateTables();
-        this.updateLastUpdated();
-    }
-
-    updateSummaryCards() {
-        const summary = this.data.summary;
+    getDateRange() {
+        if (!this.data?.recentEvents?.length) return 'No data';
         
-        document.getElementById('totalClashes').textContent = summary.totalClashes;
-        document.getElementById('totalXClicks').textContent = summary.totalXClicks;
-        document.getElementById('uniqueUsers').textContent = summary.uniqueUsers;
-        document.getElementById('uniqueProjects').textContent = summary.uniqueProjects;
+        const events = this.data.recentEvents;
+        const dates = events.map(e => new Date(e.timestamp)).sort();
+        const start = dates[0];
+        const end = dates[dates.length - 1];
+        
+        if (this.isSameDay(start, end)) {
+            return start.toLocaleDateString();
+        }
+        
+        const daysDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+        return `${start.toLocaleDateString()} - ${end.toLocaleDateString()} (${daysDiff} days)`;
     }
 
-    updateCharts() {
-        this.createDailyActivityChart();
-        this.createUserActivityChart();
-        this.createProjectChart();
-        this.createHourlyChart();
+    isSameDay(date1, date2) {
+        return date1.toDateString() === date2.toDateString();
     }
 
-    createDailyActivityChart() {
+    filterByDate(filter) {
+        this.dateFilter = filter;
+        this.currentPage = 1;
+        this.applyDateFilter();
+        this.updateDashboard();
+        
+        // Update URL to remember filter
+        const url = new URL(window.location);
+        if (filter === 'all') {
+            url.searchParams.delete('filter');
+        } else {
+            url.searchParams.set('filter', filter);
+        }
+        window.history.replaceState({}, '', url);
+    }
+
+    applyDateFilter() {
+        if (!this.data) return;
+        
+        let cutoffDate = null;
+        const now = new Date();
+        
+        switch (this.dateFilter) {
+            case '30days':
+                cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                break;
+            case '90days':
+                cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                break;
+            case '1year':
+                cutoffDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+                break;
+            default:
+                cutoffDate = null;
+        }
+        
+        // Clone original data
+        this.filteredData = JSON.parse(JSON.stringify(this.data));
+        
+        if (cutoffDate) {
+            // Filter events
+            this.filteredData.recentEvents = this.data.recentEvents.filter(event => 
+                new Date(event.timestamp) >= cutoffDate
+            );
+            
+            // Filter daily stats
+            this.filteredData.dailyStats = this.data.dailyStats.filter(stat => 
+                new Date(stat.date) >= cutoffDate
+            );
+            
+            // Recalculate summary for filtered data
+            this.recalculateFilteredSummary();
+        }
+    }
+
+    recalculateFilteredSummary() {
+        if (!this.filteredData) return;
+        
+        const events = this.filteredData.recentEvents;
+        const clashEvents = events.filter(e => e.type === 'clash');
+        const xClickEvents = events.filter(e => e.type === 'x_click');
+        
+        const users = [...new Set(events.map(e => e.user))];
+        const projects = [...new Set(events.map(e => e.project))];
+        
+        // Recalculate user activity for filtered period
+        const userActivity = [];
+        users.forEach(user => {
+            const userEvents = events.filter(e => e.user === user);
+            const userClashes = userEvents.filter(e => e.type === 'clash').length;
+            const userXClicks = userEvents.filter(e => e.type === 'x_click').length;
+            const userProjects = [...new Set(userEvents.map(e => e.project))];
+            const mostActiveProject = userProjects[0] || '';
+            const lastActivity = Math.max(...userEvents.map(e => new Date(e.timestamp)));
+            
+            userActivity.push({
+                user: user,
+                totalClashes: userClashes,
+                xClicks: userXClicks,
+                mostActiveProject: mostActiveProject,
+                lastActivity: new Date(lastActivity).toISOString()
+            });
+        });
+        
+        // Recalculate project stats for filtered period
+        const projectStats = [];
+        projects.forEach(project => {
+            const projectEvents = events.filter(e => e.project === project);
+            const projectClashes = projectEvents.filter(e => e.type === 'clash').length;
+            const projectXClicks = projectEvents.filter(e => e.type === 'x_click').length;
+            const projectUsers = [...new Set(projectEvents.map(e => e.user))];
+            const lastClash = Math.max(...projectEvents.filter(e => e.type === 'clash').map(e => new Date(e.timestamp)));
+            
+            projectStats.push({
+                project: project,
+                clashes: projectClashes,
+                xClicks: projectXClicks,
+                users: projectUsers,
+                lastClash: isFinite(lastClash) ? new Date(lastClash).toISOString() : new Date().toISOString()
+            });
+        });
+        
+        this.filteredData.summary = {
+            ...this.filteredData.summary,
+            totalClashes: clashEvents.length,
+            totalXClicks: xClickEvents.length,
+            uniqueUsers: users.length,
+            uniqueProjects: projects.length
+        };
+        
+        this.filteredData.userActivity = userActivity;
+        this.filteredData.projectStats = projectStats;
+    }
+
+    updateDashboard() {
+        const dataToUse = this.filteredData || this.data;
+        this.updateSummaryCards(dataToUse);
+        this.updateCharts(dataToUse);
+        this.updateTables(dataToUse);
+        this.updateLastUpdated();
+        this.updatePagination();
+    }
+
+    updateSummaryCards(data) {
+        const summary = data.summary;
+        
+        document.getElementById('totalClashes').textContent = summary.totalClashes.toLocaleString();
+        document.getElementById('totalXClicks').textContent = summary.totalXClicks.toLocaleString();
+        document.getElementById('uniqueUsers').textContent = summary.uniqueUsers.toLocaleString();
+        document.getElementById('uniqueProjects').textContent = summary.uniqueProjects.toLocaleString();
+        
+        // Add filter indicator to card titles
+        const filterIndicator = this.dateFilter === 'all' ? '' : ` (${this.getFilterLabel()})`;
+        const cards = document.querySelectorAll('.card-content h3');
+        if (cards.length >= 4) {
+            cards[0].textContent = 'Total Clashes' + filterIndicator;
+            cards[1].textContent = 'X Button Clicks' + filterIndicator;
+            cards[2].textContent = 'Active Users' + filterIndicator;
+            cards[3].textContent = 'Projects' + filterIndicator;
+        }
+    }
+
+    getFilterLabel() {
+        switch (this.dateFilter) {
+            case '30days': return 'Last 30 Days';
+            case '90days': return 'Last 90 Days';
+            case '1year': return 'Last Year';
+            default: return '';
+        }
+    }
+
+    updateCharts(data) {
+        // Limit chart data for performance
+        const limitedDailyStats = data.dailyStats.slice(-100); // Last 100 days
+        const limitedUserActivity = data.userActivity.slice(0, 20); // Top 20 users
+        const limitedProjectStats = data.projectStats.slice(0, 10); // Top 10 projects
+        
+        this.createDailyActivityChart(limitedDailyStats);
+        this.createUserActivityChart(limitedUserActivity);
+        this.createProjectChart(limitedProjectStats);
+        this.createHourlyChart(data.recentEvents);
+    }
+
+    createDailyActivityChart(dailyStats) {
         const ctx = document.getElementById('dailyActivityChart').getContext('2d');
         
         if (this.charts.dailyActivity) {
             this.charts.dailyActivity.destroy();
         }
 
-        const dailyStats = this.data.dailyStats;
         const labels = dailyStats.map(stat => new Date(stat.date).toLocaleDateString());
         const clashData = dailyStats.map(stat => stat.clashes);
         const xClickData = dailyStats.map(stat => stat.xClicks);
@@ -172,17 +376,21 @@ class ClashDashboard {
         });
     }
 
-    createUserActivityChart() {
+    createUserActivityChart(userActivity) {
         const ctx = document.getElementById('userActivityChart').getContext('2d');
         
         if (this.charts.userActivity) {
             this.charts.userActivity.destroy();
         }
 
-        const userActivity = this.data.userActivity;
-        const labels = userActivity.map(user => user.user);
-        const clashData = userActivity.map(user => user.totalClashes);
-        const xClickData = userActivity.map(user => user.xClicks);
+        // Sort by total clashes and limit to top 20
+        const topUsers = userActivity
+            .sort((a, b) => b.totalClashes - a.totalClashes)
+            .slice(0, 20);
+
+        const labels = topUsers.map(user => user.user);
+        const clashData = topUsers.map(user => user.totalClashes);
+        const xClickData = topUsers.map(user => user.xClicks);
 
         this.charts.userActivity = new Chart(ctx, {
             type: 'bar',
@@ -223,16 +431,20 @@ class ClashDashboard {
         });
     }
 
-    createProjectChart() {
+    createProjectChart(projectStats) {
         const ctx = document.getElementById('projectChart').getContext('2d');
         
         if (this.charts.project) {
             this.charts.project.destroy();
         }
 
-        const projectStats = this.data.projectStats;
-        const labels = projectStats.map(project => project.project);
-        const data = projectStats.map(project => project.clashes);
+        // Sort by clashes and limit to top 10
+        const topProjects = projectStats
+            .sort((a, b) => b.clashes - a.clashes)
+            .slice(0, 10);
+
+        const labels = topProjects.map(project => project.project);
+        const data = topProjects.map(project => project.clashes);
 
         this.charts.project = new Chart(ctx, {
             type: 'doughnut',
@@ -241,11 +453,8 @@ class ClashDashboard {
                 datasets: [{
                     data: data,
                     backgroundColor: [
-                        '#3b82f6',
-                        '#10b981',
-                        '#f59e0b',
-                        '#ef4444',
-                        '#8b5cf6'
+                        '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
+                        '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#14b8a6'
                     ],
                     borderWidth: 2,
                     borderColor: getComputedStyle(document.documentElement).getPropertyValue('--surface-color')
@@ -263,16 +472,18 @@ class ClashDashboard {
         });
     }
 
-    createHourlyChart() {
+    createHourlyChart(recentEvents) {
         const ctx = document.getElementById('hourlyChart').getContext('2d');
         
         if (this.charts.hourly) {
             this.charts.hourly.destroy();
         }
 
-        // Generate sample hourly data based on recent events
+        // Generate hourly data from recent events (last 1000 events for performance)
+        const eventsToAnalyze = recentEvents.slice(0, 1000);
         const hourlyData = new Array(24).fill(0);
-        this.data.recentEvents.forEach(event => {
+        
+        eventsToAnalyze.forEach(event => {
             const hour = new Date(event.timestamp).getHours();
             hourlyData[hour]++;
         });
@@ -310,17 +521,43 @@ class ClashDashboard {
         });
     }
 
-    updateTables() {
+    updateTables(data) {
         this.updateRecentActivityTable();
         this.updateUserStatsTable();
         this.updateProjectStatsTable();
     }
 
     updateRecentActivityTable() {
+        const dataToUse = this.filteredData || this.data;
         const tbody = document.getElementById('recentActivityBody');
         tbody.innerHTML = '';
 
-        this.data.recentEvents.slice(0, 10).forEach(event => {
+        // Calculate pagination
+        const totalEvents = dataToUse.recentEvents.length;
+        const startIndex = (this.currentPage - 1) * this.eventsPerPage;
+        const endIndex = Math.min(startIndex + this.eventsPerPage, totalEvents);
+        const eventsToShow = dataToUse.recentEvents.slice(startIndex, endIndex);
+
+        // Add pagination info
+        const tableContainer = tbody.closest('.table-container');
+        let paginationInfo = tableContainer.querySelector('.pagination-info');
+        if (!paginationInfo) {
+            paginationInfo = document.createElement('div');
+            paginationInfo.className = 'pagination-info';
+            tableContainer.querySelector('.table-header').appendChild(paginationInfo);
+        }
+        
+        const totalPages = Math.ceil(totalEvents / this.eventsPerPage);
+        paginationInfo.innerHTML = `
+            <span>Showing ${startIndex + 1}-${endIndex} of ${totalEvents.toLocaleString()} events</span>
+            <div class="pagination-controls">
+                <button onclick="prevPage()" ${this.currentPage === 1 ? 'disabled' : ''}>‹ Previous</button>
+                <span>Page ${this.currentPage} of ${totalPages}</span>
+                <button onclick="nextPage()" ${endIndex >= totalEvents ? 'disabled' : ''}>Next ›</button>
+            </div>
+        `;
+
+        eventsToShow.forEach(event => {
             const row = document.createElement('tr');
             const time = new Date(event.timestamp).toLocaleString();
             const actionBadge = event.type === 'x_click' ? 
@@ -338,42 +575,221 @@ class ClashDashboard {
     }
 
     updateUserStatsTable() {
+        const dataToUse = this.filteredData || this.data;
         const tbody = document.getElementById('userStatsBody');
         tbody.innerHTML = '';
 
-        this.data.userActivity.forEach(user => {
+        // Limit to top 50 users for performance, sorted by total clashes
+        const topUsers = dataToUse.userActivity
+            .sort((a, b) => b.totalClashes - a.totalClashes)
+            .slice(0, 50);
+
+        topUsers.forEach(user => {
             const row = document.createElement('tr');
             const lastActivity = new Date(user.lastActivity).toLocaleString();
 
             row.innerHTML = `
                 <td><strong>${user.user}</strong></td>
-                <td><span class="badge badge-error">${user.totalClashes}</span></td>
-                <td><span class="badge badge-warning">${user.xClicks}</span></td>
+                <td><span class="badge badge-error">${user.totalClashes.toLocaleString()}</span></td>
+                <td><span class="badge badge-warning">${user.xClicks.toLocaleString()}</span></td>
                 <td>${user.mostActiveProject}</td>
                 <td>${lastActivity}</td>
             `;
             tbody.appendChild(row);
         });
+
+        // Add notice if data was limited
+        if (dataToUse.userActivity.length > 50) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td colspan="5" class="text-center" style="font-style: italic; color: var(--text-secondary);">
+                    Showing top 50 users of ${dataToUse.userActivity.length.toLocaleString()} total users
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
     }
 
     updateProjectStatsTable() {
+        const dataToUse = this.filteredData || this.data;
         const tbody = document.getElementById('projectStatsBody');
         tbody.innerHTML = '';
 
-        this.data.projectStats.forEach(project => {
+        // Limit to top 30 projects for performance, sorted by clashes
+        const topProjects = dataToUse.projectStats
+            .sort((a, b) => b.clashes - a.clashes)
+            .slice(0, 30);
+
+        topProjects.forEach(project => {
             const row = document.createElement('tr');
             const lastClash = new Date(project.lastClash).toLocaleString();
             const userCount = project.users.length;
 
             row.innerHTML = `
                 <td><strong>${project.project}</strong></td>
-                <td><span class="badge badge-error">${project.clashes}</span></td>
-                <td><span class="badge badge-warning">${project.xClicks}</span></td>
-                <td><span class="badge badge-success">${userCount}</span></td>
+                <td><span class="badge badge-error">${project.clashes.toLocaleString()}</span></td>
+                <td><span class="badge badge-warning">${project.xClicks.toLocaleString()}</span></td>
+                <td><span class="badge badge-success">${userCount.toLocaleString()}</span></td>
                 <td>${lastClash}</td>
             `;
             tbody.appendChild(row);
         });
+
+        // Add notice if data was limited
+        if (dataToUse.projectStats.length > 30) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td colspan="5" class="text-center" style="font-style: italic; color: var(--text-secondary);">
+                    Showing top 30 projects of ${dataToUse.projectStats.length.toLocaleString()} total projects
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
+    }
+
+    updatePagination() {
+        this.updateRecentActivityTable();
+    }
+
+    nextPage() {
+        const dataToUse = this.filteredData || this.data;
+        const totalPages = Math.ceil(dataToUse.recentEvents.length / this.eventsPerPage);
+        if (this.currentPage < totalPages) {
+            this.currentPage++;
+            this.updatePagination();
+        }
+    }
+
+    prevPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.updatePagination();
+        }
+    }
+
+    goToPage(page) {
+        const dataToUse = this.filteredData || this.data;
+        const totalPages = Math.ceil(dataToUse.recentEvents.length / this.eventsPerPage);
+        if (page >= 1 && page <= totalPages) {
+            this.currentPage = page;
+            this.updatePagination();
+        }
+    }
+
+    showExportOptions() {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📥 Export Data</h3>
+                    <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Choose export format and data range:</p>
+                    <div style="margin: 1rem 0;">
+                        <label>
+                            <input type="radio" name="exportFormat" value="json" checked> JSON (Complete Data)
+                        </label><br>
+                        <label>
+                            <input type="radio" name="exportFormat" value="csv"> CSV (Events Only)
+                        </label><br>
+                        <label>
+                            <input type="radio" name="exportFormat" value="excel"> Excel (Summary + Events)
+                        </label>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label>
+                            <input type="radio" name="exportRange" value="current" checked> Current Filter (${this.getFilterLabel() || 'All Data'})
+                        </label><br>
+                        <label>
+                            <input type="radio" name="exportRange" value="all"> All Historical Data
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="this.closest('.modal').remove()">Cancel</button>
+                    <button onclick="dashboard.performExport(); this.closest('.modal').remove()">Export</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    performExport() {
+        const format = document.querySelector('input[name="exportFormat"]:checked').value;
+        const range = document.querySelector('input[name="exportRange"]:checked').value;
+        
+        const dataToExport = range === 'all' ? this.data : (this.filteredData || this.data);
+        const timestamp = new Date().toISOString().split('T')[0];
+        
+        switch (format) {
+            case 'json':
+                this.downloadFile(
+                    JSON.stringify(dataToExport, null, 2),
+                    `clash-data-${timestamp}.json`,
+                    'application/json'
+                );
+                break;
+            case 'csv':
+                this.downloadFile(
+                    this.convertToCSV(dataToExport.recentEvents),
+                    `clash-events-${timestamp}.csv`,
+                    'text/csv'
+                );
+                break;
+            case 'excel':
+                this.downloadFile(
+                    this.convertToExcelCSV(dataToExport),
+                    `clash-report-${timestamp}.csv`,
+                    'text/csv'
+                );
+                break;
+        }
+    }
+
+    convertToCSV(events) {
+        const headers = ['Timestamp', 'Type', 'User', 'Project', 'Action'];
+        const rows = events.map(event => [
+            event.timestamp,
+            event.type,
+            event.user,
+            event.project,
+            event.action
+        ]);
+
+        return [headers, ...rows].map(row => 
+            row.map(cell => `"${cell}"`).join(',')
+        ).join('\n');
+    }
+
+    convertToExcelCSV(data) {
+        let csv = 'CLASH DETECTION DASHBOARD REPORT\n';
+        csv += `Generated: ${new Date().toLocaleString()}\n\n`;
+        
+        csv += 'SUMMARY\n';
+        csv += `Total Clashes,${data.summary.totalClashes}\n`;
+        csv += `Total X-Clicks,${data.summary.totalXClicks}\n`;
+        csv += `Active Users,${data.summary.uniqueUsers}\n`;
+        csv += `Active Projects,${data.summary.uniqueProjects}\n\n`;
+        
+        csv += 'RECENT EVENTS\n';
+        csv += this.convertToCSV(data.recentEvents);
+        
+        return csv;
+    }
+
+    downloadFile(content, filename, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     }
 
     updateLastUpdated() {
@@ -411,6 +827,96 @@ class ClashDashboard {
     closeErrorModal() {
         document.getElementById('errorModal').style.display = 'none';
     }
+
+    getSampleData() {
+        // Enhanced sample data for demonstration
+        return {
+            lastUpdated: new Date().toISOString(),
+            summary: {
+                totalClashes: 1247,
+                totalXClicks: 156,
+                uniqueUsers: 8,
+                uniqueProjects: 12,
+                dateRange: {
+                    start: '2024-01-01',
+                    end: new Date().toISOString().split('T')[0]
+                }
+            },
+            dailyStats: this.generateSampleDailyStats(),
+            userActivity: this.generateSampleUserActivity(),
+            projectStats: this.generateSampleProjectStats(),
+            recentEvents: this.generateSampleEvents()
+        };
+    }
+
+    generateSampleDailyStats() {
+        const stats = [];
+        const startDate = new Date('2024-01-01');
+        const endDate = new Date();
+        
+        for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+            stats.push({
+                date: d.toISOString().split('T')[0],
+                clashes: Math.floor(Math.random() * 15),
+                xClicks: Math.floor(Math.random() * 5),
+                users: ['User_001', 'User_002', 'User_003'],
+                projects: ['Project_Alpha', 'Project_Beta']
+            });
+        }
+        
+        return stats;
+    }
+
+    generateSampleUserActivity() {
+        return [
+            { user: 'ahmade', totalClashes: 347, xClicks: 42, mostActiveProject: 'space test model-22', lastActivity: new Date().toISOString() },
+            { user: 'john.smith', totalClashes: 289, xClicks: 31, mostActiveProject: 'Office Tower A', lastActivity: new Date(Date.now() - 2*60*60*1000).toISOString() },
+            { user: 'sarah.jones', totalClashes: 203, xClicks: 18, mostActiveProject: 'Residential Complex', lastActivity: new Date(Date.now() - 4*60*60*1000).toISOString() },
+            { user: 'mike.chen', totalClashes: 178, xClicks: 25, mostActiveProject: 'Hospital Wing', lastActivity: new Date(Date.now() - 6*60*60*1000).toISOString() },
+            { user: 'lisa.brown', totalClashes: 156, xClicks: 19, mostActiveProject: 'Mall Renovation', lastActivity: new Date(Date.now() - 8*60*60*1000).toISOString() },
+            { user: 'david.wilson', totalClashes: 134, xClicks: 14, mostActiveProject: 'School Building', lastActivity: new Date(Date.now() - 12*60*60*1000).toISOString() },
+            { user: 'emma.davis', totalClashes: 98, xClicks: 12, mostActiveProject: 'Library Extension', lastActivity: new Date(Date.now() - 24*60*60*1000).toISOString() },
+            { user: 'alex.taylor', totalClashes: 67, xClicks: 8, mostActiveProject: 'Parking Garage', lastActivity: new Date(Date.now() - 48*60*60*1000).toISOString() }
+        ];
+    }
+
+    generateSampleProjectStats() {
+        return [
+            { project: 'space test model-22', clashes: 156, xClicks: 23, users: ['ahmade'], lastClash: new Date().toISOString() },
+            { project: 'Office Tower A', clashes: 134, xClicks: 18, users: ['john.smith', 'sarah.jones'], lastClash: new Date(Date.now() - 2*60*60*1000).toISOString() },
+            { project: 'Residential Complex', clashes: 98, xClicks: 14, users: ['sarah.jones', 'mike.chen'], lastClash: new Date(Date.now() - 4*60*60*1000).toISOString() },
+            { project: 'Hospital Wing', clashes: 87, xClicks: 12, users: ['mike.chen', 'lisa.brown'], lastClash: new Date(Date.now() - 6*60*60*1000).toISOString() },
+            { project: 'Mall Renovation', clashes: 76, xClicks: 11, users: ['lisa.brown', 'david.wilson'], lastClash: new Date(Date.now() - 8*60*60*1000).toISOString() },
+            { project: 'School Building', clashes: 65, xClicks: 9, users: ['david.wilson', 'emma.davis'], lastClash: new Date(Date.now() - 12*60*60*1000).toISOString() },
+            { project: 'Library Extension', clashes: 54, xClicks: 7, users: ['emma.davis', 'alex.taylor'], lastClash: new Date(Date.now() - 24*60*60*1000).toISOString() },
+            { project: 'Parking Garage', clashes: 43, xClicks: 6, users: ['alex.taylor'], lastClash: new Date(Date.now() - 48*60*60*1000).toISOString() }
+        ];
+    }
+
+    generateSampleEvents() {
+        const events = [];
+        const users = ['ahmade', 'john.smith', 'sarah.jones', 'mike.chen', 'lisa.brown', 'david.wilson', 'emma.davis', 'alex.taylor'];
+        const projects = ['space test model-22', 'Office Tower A', 'Residential Complex', 'Hospital Wing', 'Mall Renovation', 'School Building', 'Library Extension', 'Parking Garage'];
+        const types = ['clash', 'x_click'];
+        
+        // Generate last 500 events for demonstration
+        for (let i = 0; i < 500; i++) {
+            const timestamp = new Date(Date.now() - i * 60 * 60 * 1000); // 1 hour intervals
+            const type = types[Math.floor(Math.random() * types.length)];
+            const user = users[Math.floor(Math.random() * users.length)];
+            const project = projects[Math.floor(Math.random() * projects.length)];
+            
+            events.push({
+                timestamp: timestamp.toISOString(),
+                type: type,
+                user: user,
+                project: project,
+                action: type === 'clash' ? 'Clash Detected' : 'Dialog Close Attempt (Prevented)'
+            });
+        }
+        
+        return events.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    }
 }
 
 // Initialize dashboard when DOM is loaded
@@ -437,52 +943,5 @@ window.exportData = function(format = 'json') {
         alert('No data available to export');
         return;
     }
-
-    const data = window.dashboard.data;
-    let content, filename, mimeType;
-
-    switch (format) {
-        case 'json':
-            content = JSON.stringify(data, null, 2);
-            filename = `clash-data-${new Date().toISOString().split('T')[0]}.json`;
-            mimeType = 'application/json';
-            break;
-        case 'csv':
-            content = convertToCSV(data.recentEvents);
-            filename = `clash-events-${new Date().toISOString().split('T')[0]}.csv`;
-            mimeType = 'text/csv';
-            break;
-        default:
-            alert('Unsupported format');
-            return;
-    }
-
-    downloadFile(content, filename, mimeType);
+    window.dashboard.showExportOptions();
 };
-
-function convertToCSV(events) {
-    const headers = ['Timestamp', 'Type', 'User', 'Project', 'Action'];
-    const rows = events.map(event => [
-        event.timestamp,
-        event.type,
-        event.user,
-        event.project,
-        event.action
-    ]);
-
-    return [headers, ...rows].map(row => 
-        row.map(cell => `"${cell}"`).join(',')
-    ).join('\n');
-}
-
-function downloadFile(content, filename, mimeType) {
-    const blob = new Blob([content], { type: mimeType });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-}
