@@ -1,17 +1,55 @@
 {
-  "lastUpdated": "2025-07-01T15:05:27.9511789Z",
+  "lastUpdated": "2025-07-01T15:06:09.8021789Z",
   "summary": {
-    "totalClashes": 0,
+    "totalClashes": 1,
     "totalXClicks": 0,
-    "uniqueUsers": 0,
-    "uniqueProjects": 0,
+    "uniqueUsers": 1,
+    "uniqueProjects": 1,
     "dateRange": {
       "start": "2025-07-01",
       "end": "2025-07-01"
     }
   },
-  "dailyStats": [],
-  "userActivity": [],
-  "projectStats": [],
-  "recentEvents": []
+  "dailyStats": [
+    {
+      "date": "2025-07-01",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "projects": [
+        "space test model-22"
+      ]
+    }
+  ],
+  "userActivity": [
+    {
+      "user": "ahmade",
+      "totalClashes": 1,
+      "xClicks": 0,
+      "mostActiveProject": "space test model-22",
+      "lastActivity": "2025-07-01T15:06:09.8001792Z"
+    }
+  ],
+  "projectStats": [
+    {
+      "project": "space test model-22",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-07-01T15:06:09.8011798Z"
+    }
+  ],
+  "recentEvents": [
+    {
+      "timestamp": "2025-07-01T15:06:09.7981795Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Clash Detected"
+    }
+  ]
 }
