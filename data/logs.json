@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2025-07-01T18:20:32.1257083Z",
+  "lastUpdated": "2025-07-01T18:20:34.1832067Z",
   "summary": {
     "totalClashes": 8,
-    "totalXClicks": 25,
+    "totalXClicks": 26,
     "uniqueUsers": 1,
     "uniqueProjects": 2,
     "dateRange": {
@@ -14,7 +14,7 @@
     {
       "date": "2025-07-01",
       "clashes": 8,
-      "xClicks": 25,
+      "xClicks": 26,
       "users": [
         "ahmade"
       ],
@@ -28,9 +28,9 @@
     {
       "user": "ahmade",
       "totalClashes": 8,
-      "xClicks": 25,
+      "xClicks": 26,
       "mostActiveProject": "space test model-22",
-      "lastActivity": "2025-07-01T18:20:32.1257083Z"
+      "lastActivity": "2025-07-01T18:20:34.1832067Z"
     }
   ],
   "projectStats": [
@@ -46,7 +46,7 @@
     {
       "project": "space test model-22",
       "clashes": 6,
-      "xClicks": 12,
+      "xClicks": 13,
       "users": [
         "ahmade"
       ],
@@ -54,6 +54,13 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-07-01T18:20:34.1832067Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
     {
       "timestamp": "2025-07-01T18:20:32.1257083Z",
       "type": "x_click",
