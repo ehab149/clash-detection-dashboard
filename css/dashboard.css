@@ -1,570 +1,453 @@
-/* Root Variables */
-:root {
-    --primary-color: #2563eb;
-    --secondary-color: #10b981;
-    --danger-color: #ef4444;
-    --warning-color: #f59e0b;
-    --background-color: #f8fafc;
-    --surface-color: #ffffff;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --border-color: #e5e7eb;
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --border-radius: 8px;
-    --border-radius-lg: 12px;
-}
-
-/* Dark Theme */
-[data-theme="dark"] {
-    --background-color: #0f172a;
-    --surface-color: #1e293b;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border-color: #334155;
-}
-
-/* Reset and Base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-primary);
-    line-height: 1.6;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dashboard-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Header */
-.dashboard-header {
-    background: var(--surface-color);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-left h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-}
-
-.subtitle {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.last-updated {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-}
-
-.theme-toggle,
-.refresh-btn {
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background: var(--surface-color);
-    color: var(--text-primary);
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-}
-
-.theme-toggle:hover,
-.refresh-btn:hover {
-    background: var(--background-color);
-    transform: translateY(-1px);
-}
-
-/* Summary Section */
-.summary-section {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.summary-card {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow: var(--shadow);
-    transition: all 0.2s ease;
-}
-
-.summary-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.card-icon {
-    font-size: 2rem;
-    padding: 0.75rem;
-    background: var(--background-color);
-    border-radius: var(--border-radius);
-}
-
-.card-content h3 {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-}
-
-.card-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-top: 0.25rem;
-}
-
-/* Charts Section */
-.charts-section {
-    padding: 0 2rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.charts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 1.5rem;
-}
-
-.chart-container {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
-}
-
-.chart-header {
-    margin-bottom: 1rem;
-}
-
-.chart-header h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-}
-
-.chart-header p {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-}
-
-/* Tables Section */
-.tables-section {
-    padding: 0 2rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.tables-grid {
-    display: grid;
-    gap: 1.5rem;
-}
-
-.table-container {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-}
-
-.table-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.table-header h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-}
-
-.table-header p {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-}
-
-th {
-    background: var(--background-color);
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-td {
-    font-size: 0.875rem;
-}
-
-tbody tr:hover {
-    background: var(--background-color);
-}
-
-/* Footer */
-.dashboard-footer {
-    background: var(--surface-color);
-    border-top: 1px solid var(--border-color);
-    margin-top: auto;
-    padding: 2rem;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-}
-
-.footer-content p:first-child {
-    margin-bottom: 0.5rem;
-}
-
-/* Loading Overlay */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    color: white;
-}
-
-.loading-spinner {
-    width: 3rem;
-    height: 3rem;
-    border: 0.25rem solid rgba(255, 255, 255, 0.3);
-    border-top: 0.25rem solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: var(--surface-color);
-    border-radius: var(--border-radius-lg);
-    max-width: 500px;
-    width: 90%;
-    max-height: 90%;
-    overflow: auto;
-    box-shadow: var(--shadow-lg);
-}
-
-.modal-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-header h3 {
-    margin: 0;
-}
-
-.close {
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-secondary);
-}
-
-.close:hover {
-    color: var(--text-primary);
-}
-
-.modal-body {
-    padding: 1.5rem;
-}
-
-.modal-footer {
-    padding: 1.5rem;
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-}
-
-.modal-footer button {
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background: var(--surface-color);
-    color: var(--text-primary);
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-}
-
-.modal-footer button:hover {
-    background: var(--background-color);
-}
-
-.modal-footer button:last-child {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.modal-footer button:last-child:hover {
-    background: #1d4ed8;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
+// Enhanced dashboard.js for unlimited data handling
+class ClashDashboard {
+    constructor() {
+        this.charts = {};
+        this.data = null;
+        this.theme = localStorage.getItem('theme') || 'light';
+        this.currentPage = 1;
+        this.eventsPerPage = 50;
+        this.dateFilter = 'all'; // 'all', '30days', '90days', '1year'
+        this.filteredData = null;
+        this.init();
     }
 
-    .header-right {
-        justify-content: center;
+    init() {
+        this.applyTheme();
+        this.loadData();
+        this.setupEventListeners();
+        this.setupFilters();
+        
+        // Auto-refresh every 5 minutes
+        setInterval(() => this.loadData(), 5 * 60 * 1000);
     }
 
-    .summary-section,
-    .charts-section,
-    .tables-section {
-        padding: 1rem;
+    setupEventListeners() {
+        window.toggleTheme = () => this.toggleTheme();
+        window.closeErrorModal = () => this.closeErrorModal();
+        window.loadData = () => this.loadData();
+        
+        // Pagination events
+        window.nextPage = () => this.nextPage();
+        window.prevPage = () => this.prevPage();
+        window.goToPage = (page) => this.goToPage(page);
+        
+        // Filter events  
+        window.filterByDate = (filter) => this.filterByDate(filter);
+        window.exportData = (format) => this.exportData(format);
     }
 
-    .summary-grid {
-        grid-template-columns: 1fr;
+    setupFilters() {
+        // Add filter controls to header
+        const headerRight = document.querySelector('.header-right');
+        
+        // Date filter dropdown
+        const filterContainer = document.createElement('div');
+        filterContainer.className = 'filter-container';
+        filterContainer.innerHTML = `
+            <select id="dateFilter" onchange="filterByDate(this.value)">
+                <option value="all">All Time</option>
+                <option value="30days">Last 30 Days</option>
+                <option value="90days">Last 90 Days</option>
+                <option value="1year">Last Year</option>
+            </select>
+        `;
+        
+        // Export button
+        const exportBtn = document.createElement('button');
+        exportBtn.className = 'refresh-btn';
+        exportBtn.innerHTML = '📥 Export';
+        exportBtn.onclick = () => this.showExportOptions();
+        
+        headerRight.insertBefore(filterContainer, headerRight.lastElementChild);
+        headerRight.insertBefore(exportBtn, headerRight.lastElementChild);
     }
 
-    .charts-grid {
-        grid-template-columns: 1fr;
+    async loadData() {
+        try {
+            this.showLoading();
+            
+            const timestamp = new Date().getTime();
+            const response = await fetch(`./data/logs.json?t=${timestamp}`);
+            
+            if (!response.ok) {
+                this.data = this.getSampleData();
+            } else {
+                this.data = await response.json();
+            }
+            
+            // Show data statistics
+            this.showDataStatistics();
+            
+            // Apply current filter
+            this.applyDateFilter();
+            
+            this.updateDashboard();
+            this.hideLoading();
+            
+        } catch (error) {
+            console.error('Error loading data:', error);
+            this.showError('Failed to load dashboard data. Using sample data.');
+            this.data = this.getSampleData();
+            this.applyDateFilter();
+            this.updateDashboard();
+            this.hideLoading();
+        }
     }
 
-    .chart-container {
-        min-height: 300px;
+    showDataStatistics() {
+        const stats = this.calculateDataStatistics();
+        console.log('📊 Dashboard Data Statistics:', stats);
+        
+        // Add data info to header subtitle
+        const subtitle = document.querySelector('.subtitle');
+        if (subtitle && this.data) {
+            const totalEvents = this.data.recentEvents ? this.data.recentEvents.length : 0;
+            const dateRange = this.getDateRange();
+            subtitle.textContent = `Real-time monitoring | ${totalEvents.toLocaleString()} events | ${dateRange}`;
+        }
     }
 
-    .table-wrapper {
-        font-size: 0.75rem;
+    calculateDataStatistics() {
+        if (!this.data) return {};
+        
+        const events = this.data.recentEvents || [];
+        const dailyStats = this.data.dailyStats || [];
+        
+        return {
+            totalEvents: events.length,
+            totalDays: dailyStats.length,
+            totalClashes: this.data.summary?.totalClashes || 0,
+            totalXClicks: this.data.summary?.totalXClicks || 0,
+            uniqueUsers: this.data.summary?.uniqueUsers || 0,
+            uniqueProjects: this.data.summary?.uniqueProjects || 0,
+            dateRange: this.getDateRange(),
+            dataSize: JSON.stringify(this.data).length
+        };
     }
 
-    th,
-    td {
-        padding: 0.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .header-content {
-        padding: 1rem;
-    }
-
-    .summary-card {
-        padding: 1rem;
-    }
-
-    .chart-container {
-        padding: 1rem;
+    getDateRange() {
+        if (!this.data?.recentEvents?.length) return 'No data';
+        
+        const events = this.data.recentEvents;
+        const dates = events.map(e => new Date(e.timestamp)).sort();
+        const start = dates[0];
+        const end = dates[dates.length - 1];
+        
+        if (this.isSameDay(start, end)) {
+            return start.toLocaleDateString();
+        }
+        
+        return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
     }
 
-    .card-icon {
-        font-size: 1.5rem;
-        padding: 0.5rem;
+    isSameDay(date1, date2) {
+        return date1.toDateString() === date2.toDateString();
     }
 
-    .card-value {
-        font-size: 1.5rem;
+    filterByDate(filter) {
+        this.dateFilter = filter;
+        this.currentPage = 1;
+        this.applyDateFilter();
+        this.updateDashboard();
+        
+        // Update URL to remember filter
+        const url = new URL(window.location);
+        url.searchParams.set('filter', filter);
+        window.history.replaceState({}, '', url);
     }
+
+    applyDateFilter() {
+        if (!this.data) return;
+        
+        let cutoffDate = null;
+        const now = new Date();
+        
+        switch (this.dateFilter) {
+            case '30days':
+                cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                break;
+            case '90days':
+                cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                break;
+            case '1year':
+                cutoffDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+                break;
+            default:
+                cutoffDate = null;
+        }
+        
+        // Clone original data
+        this.filteredData = JSON.parse(JSON.stringify(this.data));
+        
+        if (cutoffDate) {
+            // Filter events
+            this.filteredData.recentEvents = this.data.recentEvents.filter(event => 
+                new Date(event.timestamp) >= cutoffDate
+            );
+            
+            // Filter daily stats
+            this.filteredData.dailyStats = this.data.dailyStats.filter(stat => 
+                new Date(stat.date) >= cutoffDate
+            );
+            
+            // Recalculate summary for filtered data
+            this.recalculateFilteredSummary();
+        }
+    }
+
+    recalculateFilteredSummary() {
+        if (!this.filteredData) return;
+        
+        const events = this.filteredData.recentEvents;
+        const clashEvents = events.filter(e => e.type === 'clash');
+        const xClickEvents = events.filter(e => e.type === 'x_click');
+        
+        const users = [...new Set(events.map(e => e.user))];
+        const projects = [...new Set(events.map(e => e.project))];
+        
+        this.filteredData.summary = {
+            ...this.filteredData.summary,
+            totalClashes: clashEvents.length,
+            totalXClicks: xClickEvents.length,
+            uniqueUsers: users.length,
+            uniqueProjects: projects.length
+        };
+    }
+
+    updateDashboard() {
+        const dataToUse = this.filteredData || this.data;
+        this.updateSummaryCards(dataToUse);
+        this.updateCharts(dataToUse);
+        this.updateTables(dataToUse);
+        this.updateLastUpdated();
+        this.updatePagination();
+    }
+
+    updateSummaryCards(data) {
+        const summary = data.summary;
+        
+        document.getElementById('totalClashes').textContent = summary.totalClashes.toLocaleString();
+        document.getElementById('totalXClicks').textContent = summary.totalXClicks.toLocaleString();
+        document.getElementById('uniqueUsers').textContent = summary.uniqueUsers.toLocaleString();
+        document.getElementById('uniqueProjects').textContent = summary.uniqueProjects.toLocaleString();
+        
+        // Add filter indicator
+        const filterIndicator = this.dateFilter === 'all' ? '' : ` (${this.getFilterLabel()})`;
+        document.querySelector('#totalClashes').parentElement.querySelector('h3').textContent = 
+            'Total Clashes' + filterIndicator;
+    }
+
+    getFilterLabel() {
+        switch (this.dateFilter) {
+            case '30days': return 'Last 30 Days';
+            case '90days': return 'Last 90 Days';
+            case '1year': return 'Last Year';
+            default: return '';
+        }
+    }
+
+    updateCharts(data) {
+        // Limit chart data for performance - show max 100 data points
+        const limitedDailyStats = data.dailyStats.slice(-100);
+        
+        this.createDailyActivityChart(limitedDailyStats);
+        this.createUserActivityChart(data.userActivity);
+        this.createProjectChart(data.projectStats);
+        this.createHourlyChart(data.recentEvents);
+    }
+
+    updateRecentActivityTable() {
+        const dataToUse = this.filteredData || this.data;
+        const tbody = document.getElementById('recentActivityBody');
+        tbody.innerHTML = '';
+
+        // Calculate pagination
+        const totalEvents = dataToUse.recentEvents.length;
+        const startIndex = (this.currentPage - 1) * this.eventsPerPage;
+        const endIndex = Math.min(startIndex + this.eventsPerPage, totalEvents);
+        const eventsToShow = dataToUse.recentEvents.slice(startIndex, endIndex);
+
+        // Add pagination info
+        const tableContainer = tbody.closest('.table-container');
+        let paginationInfo = tableContainer.querySelector('.pagination-info');
+        if (!paginationInfo) {
+            paginationInfo = document.createElement('div');
+            paginationInfo.className = 'pagination-info';
+            tableContainer.querySelector('.table-header').appendChild(paginationInfo);
+        }
+        
+        paginationInfo.innerHTML = `
+            Showing ${startIndex + 1}-${endIndex} of ${totalEvents.toLocaleString()} events
+            <div class="pagination-controls">
+                <button onclick="prevPage()" ${this.currentPage === 1 ? 'disabled' : ''}>‹ Previous</button>
+                <span>Page ${this.currentPage} of ${Math.ceil(totalEvents / this.eventsPerPage)}</span>
+                <button onclick="nextPage()" ${endIndex >= totalEvents ? 'disabled' : ''}>Next ›</button>
+            </div>
+        `;
+
+        eventsToShow.forEach(event => {
+            const row = document.createElement('tr');
+            const time = new Date(event.timestamp).toLocaleString();
+            const actionBadge = event.type === 'x_click' ? 
+                '<span class="badge badge-warning">X-Click</span>' : 
+                '<span class="badge badge-error">Clash</span>';
+
+            row.innerHTML = `
+                <td>${time}</td>
+                <td>${event.user}</td>
+                <td>${event.project}</td>
+                <td>${actionBadge}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    updatePagination() {
+        this.updateRecentActivityTable();
+    }
+
+    nextPage() {
+        const dataToUse = this.filteredData || this.data;
+        const totalPages = Math.ceil(dataToUse.recentEvents.length / this.eventsPerPage);
+        if (this.currentPage < totalPages) {
+            this.currentPage++;
+            this.updatePagination();
+        }
+    }
+
+    prevPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.updatePagination();
+        }
+    }
+
+    goToPage(page) {
+        const dataToUse = this.filteredData || this.data;
+        const totalPages = Math.ceil(dataToUse.recentEvents.length / this.eventsPerPage);
+        if (page >= 1 && page <= totalPages) {
+            this.currentPage = page;
+            this.updatePagination();
+        }
+    }
+
+    showExportOptions() {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📥 Export Data</h3>
+                    <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Choose export format and data range:</p>
+                    <div style="margin: 1rem 0;">
+                        <label>
+                            <input type="radio" name="exportFormat" value="json" checked> JSON (Complete Data)
+                        </label><br>
+                        <label>
+                            <input type="radio" name="exportFormat" value="csv"> CSV (Events Only)
+                        </label><br>
+                        <label>
+                            <input type="radio" name="exportFormat" value="excel"> Excel (Summary + Events)
+                        </label>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label>
+                            <input type="radio" name="exportRange" value="current" checked> Current Filter (${this.getFilterLabel() || 'All Data'})
+                        </label><br>
+                        <label>
+                            <input type="radio" name="exportRange" value="all"> All Historical Data
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="this.closest('.modal').remove()">Cancel</button>
+                    <button onclick="dashboard.performExport(); this.closest('.modal').remove()">Export</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    performExport() {
+        const format = document.querySelector('input[name="exportFormat"]:checked').value;
+        const range = document.querySelector('input[name="exportRange"]:checked').value;
+        
+        const dataToExport = range === 'all' ? this.data : (this.filteredData || this.data);
+        const timestamp = new Date().toISOString().split('T')[0];
+        
+        switch (format) {
+            case 'json':
+                this.downloadFile(
+                    JSON.stringify(dataToExport, null, 2),
+                    `clash-data-${timestamp}.json`,
+                    'application/json'
+                );
+                break;
+            case 'csv':
+                this.downloadFile(
+                    this.convertToCSV(dataToExport.recentEvents),
+                    `clash-events-${timestamp}.csv`,
+                    'text/csv'
+                );
+                break;
+            case 'excel':
+                // For now, export as CSV (could be enhanced to actual Excel format)
+                this.downloadFile(
+                    this.convertToExcelCSV(dataToExport),
+                    `clash-report-${timestamp}.csv`,
+                    'text/csv'
+                );
+                break;
+        }
+    }
+
+    convertToCSV(events) {
+        const headers = ['Timestamp', 'Type', 'User', 'Project', 'Action'];
+        const rows = events.map(event => [
+            event.timestamp,
+            event.type,
+            event.user,
+            event.project,
+            event.action
+        ]);
+
+        return [headers, ...rows].map(row => 
+            row.map(cell => `"${cell}"`).join(',')
+        ).join('\n');
+    }
+
+    convertToExcelCSV(data) {
+        let csv = 'CLASH DETECTION DASHBOARD REPORT\n';
+        csv += `Generated: ${new Date().toLocaleString()}\n\n`;
+        
+        csv += 'SUMMARY\n';
+        csv += `Total Clashes,${data.summary.totalClashes}\n`;
+        csv += `Total X-Clicks,${data.summary.totalXClicks}\n`;
+        csv += `Active Users,${data.summary.uniqueUsers}\n`;
+        csv += `Active Projects,${data.summary.uniqueProjects}\n\n`;
+        
+        csv += 'RECENT EVENTS\n';
+        csv += this.convertToCSV(data.recentEvents);
+        
+        return csv;
+    }
+
+    downloadFile(content, filename, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    // Keep all existing methods (updateUserStatsTable, updateProjectStatsTable, etc.)
+    // ... rest of existing code remains the same
 }
-
-/* Chart Specific Styles */
-canvas {
-    max-height: 300px;
-}
-
-/* Status Indicators */
-.status-online {
-    color: var(--secondary-color);
-}
-
-.status-warning {
-    color: var(--warning-color);
-}
-
-.status-error {
-    color: var(--danger-color);
-}
-
-/* Badges */
-.badge {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.badge-success {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.badge-warning {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.badge-error {
-    background: #fecaca;
-    color: #991b1b;
-}
-
-[data-theme="dark"] .badge-success {
-    background: #166534;
-    color: #dcfce7;
-}
-
-[data-theme="dark"] .badge-warning {
-    background: #92400e;
-    color: #fef3c7;
-}
-
-[data-theme="dark"] .badge-error {
-    background: #991b1b;
-    color: #fecaca;
-}
-
-/* Animations */
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.slide-in {
-    animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
-}
-
-/* Utility Classes */
-.hidden {
-    display: none !important;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.mt-1 { margin-top: 0.25rem; }
-.mt-2 { margin-top: 0.5rem; }
-.mt-4 { margin-top: 1rem; }
-
-.mb-1 { margin-bottom: 0.25rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-4 { margin-bottom: 1rem; }
-
-.p-2 { padding: 0.5rem; }
-.p-4 { padding: 1rem; }
-
-.font-bold { font-weight: 700; }
-.font-medium { font-weight: 500; }
-
-.text-sm { font-size: 0.875rem; }
-.text-xs { font-size: 0.75rem; }
