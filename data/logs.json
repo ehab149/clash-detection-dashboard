@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2025-07-02T18:17:42.2048167Z",
+  "lastUpdated": "2025-07-02T18:17:44.8239375Z",
   "summary": {
     "totalClashes": 11,
-    "totalXClicks": 32,
+    "totalXClicks": 33,
     "uniqueUsers": 1,
     "uniqueProjects": 3,
     "dateRange": {
@@ -14,7 +14,7 @@
     {
       "date": "2025-07-02",
       "clashes": 3,
-      "xClicks": 6,
+      "xClicks": 7,
       "users": [
         "ahmade"
       ],
@@ -40,16 +40,16 @@
     {
       "user": "ahmade",
       "totalClashes": 11,
-      "xClicks": 32,
+      "xClicks": 33,
       "mostActiveProject": "space test model-22",
-      "lastActivity": "2025-07-02T18:17:42.0548784Z"
+      "lastActivity": "2025-07-02T18:17:44.6858654Z"
     }
   ],
   "projectStats": [
     {
       "project": "29192E_JBB_E23_726 Madison - JPMC Private Club",
       "clashes": 1,
-      "xClicks": 1,
+      "xClicks": 2,
       "users": [
         "ahmade"
       ],
@@ -75,6 +75,13 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-07-02T18:17:44.6858654Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "29192E_JBB_E23_726 Madison - JPMC Private Club",
+      "action": "Dialog Close Attempt (Prevented)"
+    },
     {
       "timestamp": "2025-07-02T18:17:42.0548784Z",
       "type": "x_click",
