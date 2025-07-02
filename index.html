@@ -15,7 +15,7 @@
             <div class="header-content">
                 <div class="header-left">
                     <h1>🚨 Clash Detection Dashboard</h1>
-                    <p class="subtitle">Real-time monitoring of clash detection activity</p>
+                    <p class="subtitle">Real-time monitoring with append-only data system</p>
                 </div>
                 <div class="header-right">
                     <div class="data-info">
@@ -39,6 +39,15 @@
             </div>
         </header>
 
+        <!-- System Status Banner -->
+        <div id="systemStatus" class="system-status hidden">
+            <div class="status-content">
+                <span id="statusIcon">🔄</span>
+                <span id="statusText">System operational - append-only data sync active</span>
+                <button onclick="this.parentElement.parentElement.style.display='none'">×</button>
+            </div>
+        </div>
+
         <!-- Summary Cards -->
         <section class="summary-section">
             <div class="summary-grid">
@@ -47,6 +56,7 @@
                     <div class="card-content">
                         <h3>Total Clashes</h3>
                         <div class="card-value" id="totalClashes">0</div>
+                        <div class="card-trend" id="clashTrend"></div>
                     </div>
                 </div>
                 <div class="summary-card">
@@ -54,6 +64,7 @@
                     <div class="card-content">
                         <h3>X Button Clicks</h3>
                         <div class="card-value" id="totalXClicks">0</div>
+                        <div class="card-trend" id="xclickTrend"></div>
                     </div>
                 </div>
                 <div class="summary-card">
@@ -61,6 +72,7 @@
                     <div class="card-content">
                         <h3>Active Users</h3>
                         <div class="card-value" id="uniqueUsers">0</div>
+                        <div class="card-trend" id="userTrend"></div>
                     </div>
                 </div>
                 <div class="summary-card">
@@ -68,15 +80,17 @@
                     <div class="card-content">
                         <h3>Projects</h3>
                         <div class="card-value" id="uniqueProjects">0</div>
+                        <div class="card-trend" id="projectTrend"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Performance Notice -->
-        <div id="performanceNotice" class="performance-notice hidden">
+        <!-- Data Growth Notice -->
+        <div id="dataGrowthNotice" class="performance-notice hidden">
             <div class="notice-content">
-                ⚡ Large dataset detected. Some features may be limited for optimal performance.
+                📈 Large dataset detected: <span id="eventCount">0</span> events across <span id="dayCount">0</span> days. 
+                Charts optimized for performance.
                 <button onclick="this.parentElement.parentElement.style.display='none'">×</button>
             </div>
         </div>
@@ -87,7 +101,7 @@
                 <!-- Daily Activity Chart -->
                 <div class="chart-container">
                     <div class="chart-header">
-                        <h3>📈 Daily Activity</h3>
+                        <h3>📈 Daily Activity Trend</h3>
                         <p>Clash detection and X-click trends (last 100 days for performance)</p>
                     </div>
                     <canvas id="dailyActivityChart"></canvas>
@@ -96,8 +110,8 @@
                 <!-- User Activity Chart -->
                 <div class="chart-container">
                     <div class="chart-header">
-                        <h3>👥 User Activity</h3>
-                        <p>Activity by user (top 20 users)</p>
+                        <h3>👥 Top User Activity</h3>
+                        <p>Most active users (top 20)</p>
                     </div>
                     <canvas id="userActivityChart"></canvas>
                 </div>
@@ -106,7 +120,7 @@
                 <div class="chart-container">
                     <div class="chart-header">
                         <h3>🏗️ Project Distribution</h3>
-                        <p>Clashes by project (top 10 projects)</p>
+                        <p>Clashes by project (top 10)</p>
                     </div>
                     <canvas id="projectChart"></canvas>
                 </div>
@@ -114,7 +128,7 @@
                 <!-- Hourly Pattern Chart -->
                 <div class="chart-container">
                     <div class="chart-header">
-                        <h3>⏰ Hourly Patterns</h3>
+                        <h3>⏰ Daily Usage Patterns</h3>
                         <p>Activity by time of day</p>
                     </div>
                     <canvas id="hourlyChart"></canvas>
@@ -129,7 +143,7 @@
                 <div class="table-container">
                     <div class="table-header">
                         <h3>🕒 Recent Activity</h3>
-                        <p>Latest clash detection events</p>
+                        <p>Latest clash detection events (continuously appended)</p>
                         <div class="pagination-info">
                             <!-- Pagination info will be inserted here -->
                         </div>
@@ -158,7 +172,7 @@
                 <div class="table-container">
                     <div class="table-header">
                         <h3>👤 User Statistics</h3>
-                        <p>Per-user activity summary</p>
+                        <p>Cumulative activity summary</p>
                     </div>
                     <div class="table-wrapper">
                         <table id="userStatsTable">
@@ -182,7 +196,7 @@
                 <div class="table-container">
                     <div class="table-header">
                         <h3>📋 Project Statistics</h3>
-                        <p>Per-project clash summary</p>
+                        <p>Cumulative project clash summary</p>
                     </div>
                     <div class="table-wrapper">
                         <table id="projectStatsTable">
@@ -208,8 +222,8 @@
         <footer class="dashboard-footer">
             <div class="footer-content">
                 <p>&copy; 2024 Clash Detection Dashboard | JBB BIM EHAB AHMAD</p>
-                <p>Powered by GitHub Pages | Data updates automatically | 
-                   <span id="footerStats">Unlimited data retention enabled</span>
+                <p>🔄 Append-Only Data System | GitHub Pages | 
+                   <span id="footerStats">Continuous data accumulation enabled</span>
                 </p>
             </div>
         </footer>
@@ -218,7 +232,7 @@
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="loading-spinner"></div>
-        <p>Loading dashboard data...</p>
+        <p>Loading clash detection data...</p>
         <div class="loading-progress">
             <div class="progress-bar"></div>
         </div>
