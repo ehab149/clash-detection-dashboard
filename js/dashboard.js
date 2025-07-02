@@ -1,4 +1,4 @@
-// Enhanced Dashboard JavaScript for Unlimited Data Handling
+// Enhanced Dashboard JavaScript for Append-Only Data System
 class ClashDashboard {
     constructor() {
         this.charts = {};
@@ -8,6 +8,7 @@ class ClashDashboard {
         this.eventsPerPage = 50;
         this.dateFilter = this.getInitialFilter();
         this.filteredData = null;
+        this.previousData = null; // 🆕 Track previous data for trend calculation
         this.init();
     }
 
@@ -17,12 +18,14 @@ class ClashDashboard {
         this.setupEventListeners();
         this.setupFilters();
         
-        // Auto-refresh every 5 minutes
+        // Auto-refresh every 5 minutes for append-only updates
         setInterval(() => this.loadData(), 5 * 60 * 1000);
+        
+        // Show system status
+        this.showSystemStatus();
     }
 
     getInitialFilter() {
-        // Check URL for filter parameter
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('filter') || 'all';
     }
@@ -45,16 +48,35 @@ class ClashDashboard {
     }
 
     setupFilters() {
-        // Set initial filter value
         const filterSelect = document.getElementById('dateFilter');
         if (filterSelect) {
             filterSelect.value = this.dateFilter;
         }
     }
 
+    showSystemStatus() {
+        const statusBanner = document.getElementById('systemStatus');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusText = document.getElementById('statusText');
+        
+        if (statusBanner && statusIcon && statusText) {
+            statusIcon.textContent = '🔄';
+            statusText.textContent = 'Append-only system active - data is continuously accumulated';
+            statusBanner.classList.remove('hidden');
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                statusBanner.style.display = 'none';
+            }, 5000);
+        }
+    }
+
     async loadData() {
         try {
             this.showLoading();
+            
+            // Store previous data for trend calculation
+            this.previousData = this.data ? JSON.parse(JSON.stringify(this.data)) : null;
             
             // Add cache busting to ensure fresh data
             const timestamp = new Date().getTime();
@@ -67,8 +89,8 @@ class ClashDashboard {
                 this.data = await response.json();
             }
             
-            // Show data statistics in console and UI
-            this.showDataStatistics();
+            // Show enhanced data statistics
+            this.showEnhancedDataStatistics();
             
             // Apply current filter
             this.applyDateFilter();
@@ -86,38 +108,62 @@ class ClashDashboard {
         }
     }
 
-    showDataStatistics() {
+    showEnhancedDataStatistics() {
         if (!this.data) return;
         
         const stats = this.calculateDataStatistics();
         console.log('📊 Dashboard Data Statistics:', stats);
         
-        // Update header subtitle with data info
+        // Update header subtitle with enhanced info
         const subtitle = document.querySelector('.subtitle');
         if (subtitle) {
             const totalEvents = this.data.recentEvents ? this.data.recentEvents.length : 0;
             const dateRange = this.getDateRange();
-            subtitle.textContent = `Real-time monitoring | ${totalEvents.toLocaleString()} events | ${dateRange}`;
+            subtitle.textContent = `Real-time monitoring with append-only data system | ${totalEvents.toLocaleString()} events | ${dateRange}`;
         }
 
-        // Update footer stats
+        // Update footer stats with growth info
         const footerStats = document.getElementById('footerStats');
         if (footerStats && this.data.recentEvents) {
-            footerStats.textContent = `${this.data.recentEvents.length.toLocaleString()} events | Unlimited retention enabled`;
+            const growth = this.calculateGrowthRate();
+            footerStats.textContent = `${this.data.recentEvents.length.toLocaleString()} events | ${growth}`;
         }
 
-        // Show performance notice for large datasets
-        this.checkPerformanceNotice();
+        // Show data growth notice for large datasets
+        this.checkDataGrowthNotice();
     }
 
-    checkPerformanceNotice() {
+    calculateGrowthRate() {
+        if (!this.previousData || !this.data) {
+            return 'Growth tracking enabled';
+        }
+
+        const currentEvents = this.data.recentEvents?.length || 0;
+        const previousEvents = this.previousData.recentEvents?.length || 0;
+        const growth = currentEvents - previousEvents;
+
+        if (growth > 0) {
+            return `+${growth} events since last refresh`;
+        } else if (growth === 0) {
+            return 'No new events';
+        } else {
+            return 'Data cleaned/filtered';
+        }
+    }
+
+    checkDataGrowthNotice() {
         const totalEvents = this.data?.recentEvents?.length || 0;
-        const performanceNotice = document.getElementById('performanceNotice');
+        const dayCount = this.data?.dailyStats?.length || 0;
+        const growthNotice = document.getElementById('dataGrowthNotice');
+        const eventCountSpan = document.getElementById('eventCount');
+        const dayCountSpan = document.getElementById('dayCount');
         
-        if (totalEvents > 1000 && performanceNotice) {
-            performanceNotice.classList.remove('hidden');
-        } else if (performanceNotice) {
-            performanceNotice.classList.add('hidden');
+        if (totalEvents > 1000 && growthNotice) {
+            eventCountSpan.textContent = totalEvents.toLocaleString();
+            dayCountSpan.textContent = dayCount.toLocaleString();
+            growthNotice.classList.remove('hidden');
+        } else if (growthNotice) {
+            growthNotice.classList.add('hidden');
         }
     }
 
@@ -135,7 +181,8 @@ class ClashDashboard {
             uniqueUsers: this.data.summary?.uniqueUsers || 0,
             uniqueProjects: this.data.summary?.uniqueProjects || 0,
             dateRange: this.getDateRange(),
-            dataSize: JSON.stringify(this.data).length
+            dataSize: JSON.stringify(this.data).length,
+            avgEventsPerDay: events.length > 0 && dailyStats.length > 0 ? (events.length / dailyStats.length).toFixed(1) : 0
         };
     }
 
@@ -290,6 +337,9 @@ class ClashDashboard {
         document.getElementById('uniqueUsers').textContent = summary.uniqueUsers.toLocaleString();
         document.getElementById('uniqueProjects').textContent = summary.uniqueProjects.toLocaleString();
         
+        // Add trend indicators
+        this.updateTrendIndicators(data);
+        
         // Add filter indicator to card titles
         const filterIndicator = this.dateFilter === 'all' ? '' : ` (${this.getFilterLabel()})`;
         const cards = document.querySelectorAll('.card-content h3');
@@ -298,6 +348,58 @@ class ClashDashboard {
             cards[1].textContent = 'X Button Clicks' + filterIndicator;
             cards[2].textContent = 'Active Users' + filterIndicator;
             cards[3].textContent = 'Projects' + filterIndicator;
+        }
+    }
+
+    updateTrendIndicators(data) {
+        if (!this.previousData) return;
+
+        const trends = this.calculateTrends(data);
+        
+        const clashTrend = document.getElementById('clashTrend');
+        const xclickTrend = document.getElementById('xclickTrend');
+        const userTrend = document.getElementById('userTrend');
+        const projectTrend = document.getElementById('projectTrend');
+        
+        if (clashTrend) clashTrend.textContent = trends.clashes;
+        if (xclickTrend) xclickTrend.textContent = trends.xClicks;
+        if (userTrend) userTrend.textContent = trends.users;
+        if (projectTrend) projectTrend.textContent = trends.projects;
+    }
+
+    calculateTrends(currentData) {
+        if (!this.previousData) {
+            return {
+                clashes: 'Tracking enabled',
+                xClicks: 'Tracking enabled', 
+                users: 'Tracking enabled',
+                projects: 'Tracking enabled'
+            };
+        }
+
+        const current = currentData.summary;
+        const previous = this.previousData.summary;
+
+        const clashDiff = current.totalClashes - previous.totalClashes;
+        const xClickDiff = current.totalXClicks - previous.totalXClicks;
+        const userDiff = current.uniqueUsers - previous.uniqueUsers;
+        const projectDiff = current.uniqueProjects - previous.uniqueProjects;
+
+        return {
+            clashes: this.formatTrend(clashDiff, 'clash'),
+            xClicks: this.formatTrend(xClickDiff, 'X-click'),
+            users: this.formatTrend(userDiff, 'user'),
+            projects: this.formatTrend(projectDiff, 'project')
+        };
+    }
+
+    formatTrend(diff, type) {
+        if (diff > 0) {
+            return `+${diff} since last refresh`;
+        } else if (diff === 0) {
+            return 'No change';
+        } else {
+            return `${diff} since last refresh`;
         }
     }
 
@@ -311,7 +413,7 @@ class ClashDashboard {
     }
 
     updateCharts(data) {
-        // Limit chart data for performance
+        // Limit chart data for performance - important for append-only system
         const limitedDailyStats = data.dailyStats.slice(-100); // Last 100 days
         const limitedUserActivity = data.userActivity.slice(0, 20); // Top 20 users
         const limitedProjectStats = data.projectStats.slice(0, 10); // Top 10 projects
@@ -319,7 +421,7 @@ class ClashDashboard {
         this.createDailyActivityChart(limitedDailyStats);
         this.createUserActivityChart(limitedUserActivity);
         this.createProjectChart(limitedProjectStats);
-        this.createHourlyChart(data.recentEvents);
+        this.createHourlyChart(data.recentEvents.slice(0, 1000)); // Limit to 1000 events
     }
 
     createDailyActivityChart(dailyStats) {
@@ -479,11 +581,10 @@ class ClashDashboard {
             this.charts.hourly.destroy();
         }
 
-        // Generate hourly data from recent events (last 1000 events for performance)
-        const eventsToAnalyze = recentEvents.slice(0, 1000);
+        // Generate hourly data from recent events (limited for performance)
         const hourlyData = new Array(24).fill(0);
         
-        eventsToAnalyze.forEach(event => {
+        recentEvents.forEach(event => {
             const hour = new Date(event.timestamp).getHours();
             hourlyData[hour]++;
         });
@@ -683,7 +784,7 @@ class ClashDashboard {
         modal.innerHTML = `
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>📥 Export Data</h3>
+                    <h3>📥 Export Append-Only Data</h3>
                     <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
                 </div>
                 <div class="modal-body">
@@ -707,6 +808,9 @@ class ClashDashboard {
                             <input type="radio" name="exportRange" value="all"> All Historical Data
                         </label>
                     </div>
+                    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 1rem;">
+                        💡 Append-only system: Data continuously accumulates and is never overwritten.
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button onclick="this.closest('.modal').remove()">Cancel</button>
@@ -728,7 +832,7 @@ class ClashDashboard {
             case 'json':
                 this.downloadFile(
                     JSON.stringify(dataToExport, null, 2),
-                    `clash-data-${timestamp}.json`,
+                    `clash-data-append-only-${timestamp}.json`,
                     'application/json'
                 );
                 break;
@@ -765,14 +869,15 @@ class ClashDashboard {
     }
 
     convertToExcelCSV(data) {
-        let csv = 'CLASH DETECTION DASHBOARD REPORT\n';
+        let csv = 'CLASH DETECTION DASHBOARD REPORT (APPEND-ONLY SYSTEM)\n';
         csv += `Generated: ${new Date().toLocaleString()}\n\n`;
         
         csv += 'SUMMARY\n';
         csv += `Total Clashes,${data.summary.totalClashes}\n`;
         csv += `Total X-Clicks,${data.summary.totalXClicks}\n`;
         csv += `Active Users,${data.summary.uniqueUsers}\n`;
-        csv += `Active Projects,${data.summary.uniqueProjects}\n\n`;
+        csv += `Active Projects,${data.summary.uniqueProjects}\n`;
+        csv += `Total Events,${data.recentEvents.length}\n\n`;
         
         csv += 'RECENT EVENTS\n';
         csv += this.convertToCSV(data.recentEvents);
@@ -833,10 +938,10 @@ class ClashDashboard {
         return {
             lastUpdated: new Date().toISOString(),
             summary: {
-                totalClashes: 1247,
-                totalXClicks: 156,
-                uniqueUsers: 8,
-                uniqueProjects: 12,
+                totalClashes: 1547,
+                totalXClicks: 203,
+                uniqueUsers: 12,
+                uniqueProjects: 18,
                 dateRange: {
                     start: '2024-01-01',
                     end: new Date().toISOString().split('T')[0]
@@ -899,8 +1004,8 @@ class ClashDashboard {
         const projects = ['space test model-22', 'Office Tower A', 'Residential Complex', 'Hospital Wing', 'Mall Renovation', 'School Building', 'Library Extension', 'Parking Garage'];
         const types = ['clash', 'x_click'];
         
-        // Generate last 500 events for demonstration
-        for (let i = 0; i < 500; i++) {
+        // Generate last 1000 events for demonstration
+        for (let i = 0; i < 1000; i++) {
             const timestamp = new Date(Date.now() - i * 60 * 60 * 1000); // 1 hour intervals
             const type = types[Math.floor(Math.random() * types.length)];
             const user = users[Math.floor(Math.random() * users.length)];
