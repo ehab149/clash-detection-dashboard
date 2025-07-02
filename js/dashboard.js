@@ -119,7 +119,7 @@ class ClashDashboard {
         if (subtitle) {
             const totalEvents = this.data.recentEvents ? this.data.recentEvents.length : 0;
             const dateRange = this.getDateRange();
-            subtitle.textContent = `Real-time monitoring with append-only data system | ${totalEvents.toLocaleString()} events | ${dateRange}`;
+            subtitle.textContent = `Total number of events collected| ${totalEvents.toLocaleString()} events | ${dateRange}`;
         }
 
         // Update footer stats with growth info
