@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-07-02T16:20:08.8857978Z",
+  "lastUpdated": "2025-07-02T17:16:08.1529327Z",
   "summary": {
-    "totalClashes": 9,
+    "totalClashes": 10,
     "totalXClicks": 28,
     "uniqueUsers": 1,
     "uniqueProjects": 2,
@@ -12,20 +12,8 @@
   },
   "dailyStats": [
     {
-      "date": "2025-07-01",
-      "clashes": 8,
-      "xClicks": 26,
-      "users": [
-        "ahmade"
-      ],
-      "projects": [
-        "Test model",
-        "space test model-22"
-      ]
-    },
-    {
       "date": "2025-07-02",
-      "clashes": 1,
+      "clashes": 2,
       "xClicks": 2,
       "users": [
         "ahmade"
@@ -33,18 +21,39 @@
       "projects": [
         "space test model-22"
       ]
+    },
+    {
+      "date": "2025-07-01",
+      "clashes": 8,
+      "xClicks": 26,
+      "users": [
+        "ahmade"
+      ],
+      "projects": [
+        "space test model-22",
+        "Test model"
+      ]
     }
   ],
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 9,
+      "totalClashes": 10,
       "xClicks": 28,
       "mostActiveProject": "space test model-22",
-      "lastActivity": "2025-07-02T16:20:08.8857978Z"
+      "lastActivity": "2025-07-02T17:16:08.0110789Z"
     }
   ],
   "projectStats": [
+    {
+      "project": "space test model-22",
+      "clashes": 8,
+      "xClicks": 15,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-07-02T17:16:08.0110789Z"
+    },
     {
       "project": "Test model",
       "clashes": 2,
@@ -52,19 +61,17 @@
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-07-01T17:12:37.7645261Z"
-    },
-    {
-      "project": "space test model-22",
-      "clashes": 7,
-      "xClicks": 15,
-      "users": [
-        "ahmade"
-      ],
-      "lastClash": "2025-07-02T16:20:03.6635249Z"
+      "lastClash": "2025-07-01T17:12:37.7605263Z"
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-07-02T17:16:08.0110789Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Clash Detected"
+    },
     {
       "timestamp": "2025-07-02T16:20:08.8857978Z",
       "type": "x_click",
