@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2025-08-05T17:13:28.2517389Z",
+  "lastUpdated": "2025-08-05T20:00:32.2085177Z",
   "summary": {
-    "totalClashes": 13,
+    "totalClashes": 14,
     "totalXClicks": 33,
     "uniqueUsers": 1,
-    "uniqueProjects": 3,
+    "uniqueProjects": 4,
     "dateRange": {
       "start": "2025-07-01",
       "end": "2025-08-05"
@@ -13,12 +13,13 @@
   "dailyStats": [
     {
       "date": "2025-08-05",
-      "clashes": 1,
+      "clashes": 2,
       "xClicks": 0,
       "users": [
         "ahmade"
       ],
       "projects": [
+        "space test mech_ahmade57XZT",
         "space test model-22"
       ]
     },
@@ -61,13 +62,22 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 13,
+      "totalClashes": 14,
       "xClicks": 33,
       "mostActiveProject": "space test model-22",
-      "lastActivity": "2025-08-05T17:13:28.0768437Z"
+      "lastActivity": "2025-08-05T20:00:31.479454Z"
     }
   ],
   "projectStats": [
+    {
+      "project": "space test mech_ahmade57XZT",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-08-05T20:00:31.479454Z"
+    },
     {
       "project": "space test model-22",
       "clashes": 10,
@@ -97,6 +107,13 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-08-05T20:00:31.479454Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test mech_ahmade57XZT",
+      "action": "Clash Detected"
+    },
     {
       "timestamp": "2025-08-05T17:13:28.0768437Z",
       "type": "clash",
