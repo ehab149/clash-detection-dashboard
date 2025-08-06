@@ -421,7 +421,6 @@ class ClashDashboard {
         this.createDailyActivityChart(limitedDailyStats);
         this.createUserActivityChart(limitedUserActivity);
         this.createProjectChart(limitedProjectStats);
-        this.createHourlyChart(data.recentEvents.slice(0, 1000)); // Limit to 1000 events
     }
 
     createDailyActivityChart(dailyStats) {
@@ -574,53 +573,6 @@ class ClashDashboard {
         });
     }
 
-    createHourlyChart(recentEvents) {
-        const ctx = document.getElementById('hourlyChart').getContext('2d');
-        
-        if (this.charts.hourly) {
-            this.charts.hourly.destroy();
-        }
-
-        // Generate hourly data from recent events (limited for performance)
-        const hourlyData = new Array(24).fill(0);
-        
-        recentEvents.forEach(event => {
-            const hour = new Date(event.timestamp).getHours();
-            hourlyData[hour]++;
-        });
-
-        const labels = Array.from({length: 24}, (_, i) => `${i}:00`);
-
-        this.charts.hourly = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Activity Count',
-                    data: hourlyData,
-                    backgroundColor: '#10b981',
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
-                        }
-                    }
-                }
-            }
-        });
-    }
 
     updateTables(data) {
         this.updateRecentActivityTable();
