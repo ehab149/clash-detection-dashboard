@@ -1,16 +1,27 @@
 {
-  "lastUpdated": "2025-08-06T20:09:00.6433499Z",
+  "lastUpdated": "2025-08-07T15:19:56.2831646Z",
   "summary": {
-    "totalClashes": 18,
+    "totalClashes": 19,
     "totalXClicks": 33,
     "uniqueUsers": 1,
     "uniqueProjects": 5,
     "dateRange": {
       "start": "2025-07-01",
-      "end": "2025-08-06"
+      "end": "2025-08-07"
     }
   },
   "dailyStats": [
+    {
+      "date": "2025-08-07",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "projects": [
+        "mech 2"
+      ]
+    },
     {
       "date": "2025-08-06",
       "clashes": 2,
@@ -73,21 +84,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 18,
+      "totalClashes": 19,
       "xClicks": 33,
       "mostActiveProject": "space test model-22",
-      "lastActivity": "2025-08-06T20:09:00.4564916Z"
+      "lastActivity": "2025-08-07T15:19:56.121427Z"
     }
   ],
   "projectStats": [
     {
       "project": "mech 2",
-      "clashes": 2,
+      "clashes": 3,
       "xClicks": 0,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-08-06T20:09:00.4564916Z"
+      "lastClash": "2025-08-07T15:19:56.121427Z"
     },
     {
       "project": "space test mech_ahmade57XZT",
@@ -128,361 +139,475 @@
   ],
   "recentEvents": [
     {
+      "timestamp": "2025-08-07T15:19:56.121427Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "mech 2",
+      "action": "Clash Detected",
+      "elementInfo": "Ducts - ID: 1362431 - Name: Radius Elbows / Tees - Size: 305x305mm",
+      "clashingElements": [
+        "Structural Framing (ID: 288372) in arch test 2",
+        "Structural Framing (ID: 288633) in arch test 2"
+      ]
+    },
+    {
       "timestamp": "2025-08-06T20:09:00.4564916Z",
       "type": "clash",
       "user": "ahmade",
       "project": "mech 2",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-08-06T20:08:58.669543Z",
       "type": "clash",
       "user": "ahmade",
       "project": "mech 2",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-08-05T20:02:48.2083942Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test mech_ahmade57XZT",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-08-05T20:02:02.1178286Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test mech_ahmade57XZT",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-08-05T20:00:31.479454Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test mech_ahmade57XZT",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-08-05T17:13:28.0768437Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-07T14:49:57.3647227Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T18:17:44.6858654Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "29192E_JBB_E23_726 Madison - JPMC Private Club",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T18:17:42.0548784Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "29192E_JBB_E23_726 Madison - JPMC Private Club",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T18:17:31.7568589Z",
       "type": "clash",
       "user": "ahmade",
       "project": "29192E_JBB_E23_726 Madison - JPMC Private Club",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T17:16:14.0452607Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T17:16:12.3575929Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T17:16:10.0776291Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T17:16:08.0110789Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T16:20:08.8857978Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T16:20:06.0280135Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-02T16:20:03.6605247Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:20:34.1832067Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:20:32.1257083Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:20:30.7802233Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:20:25.2161318Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:20:23.516847Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:12:08.8651997Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:12:07.2347676Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:12:05.6899971Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:12:04.1001617Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:12:02.8119709Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:09:00.7541545Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:08:58.3331687Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T18:08:56.6922788Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:46:36.3043371Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:46:33.9406664Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:46:06.0541379Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:46:04.2799601Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:46:01.2988041Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:45:59.6174988Z",
       "type": "clash",
       "user": "ahmade",
       "project": "space test model-22",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:12:43.9411969Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:12:41.7787647Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:12:39.5434288Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T17:12:37.7605263Z",
       "type": "clash",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:12:02.6640062Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:12:01.0880613Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:59.294373Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:57.7884473Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:55.9347567Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:53.2024816Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:51.4627553Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:48.7240353Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:46.2224302Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:42.8398342Z",
       "type": "x_click",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Dialog Close Attempt (Prevented)"
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
     },
     {
       "timestamp": "2025-07-01T16:11:41.1697994Z",
       "type": "clash",
       "user": "ahmade",
       "project": "Test model",
-      "action": "Clash Detected"
+      "action": "Clash Detected",
+      "elementInfo": null,
+      "clashingElements": null
     }
   ]
 }
