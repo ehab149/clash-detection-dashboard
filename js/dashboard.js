@@ -17,7 +17,6 @@ class ClashDashboard {
         this.loadData();
         this.setupEventListeners();
         this.setupFilters();
-        this.setupFilters();
         this.populateProjectSelector();
         
         // Auto-refresh every 5 minutes for append-only updates
