@@ -17,6 +17,8 @@ class ClashDashboard {
         this.loadData();
         this.setupEventListeners();
         this.setupFilters();
+        this.setupFilters();
+        this.populateProjectSelector();
         
         // Auto-refresh every 5 minutes for append-only updates
         setInterval(() => this.loadData(), 5 * 60 * 1000);
@@ -150,6 +152,205 @@ class ClashDashboard {
             return 'Data cleaned/filtered';
         }
     }
+    populateProjectSelector() {
+    const selector = document.getElementById('projectSelector');
+    if (!selector || !this.data) return;
+    
+    // Clear existing options except the first one
+    selector.innerHTML = '<option value="">-- Select a Project --</option>';
+    
+    // Get unique projects sorted by clash count
+    const projects = this.data.projectStats || [];
+    const sortedProjects = projects.sort((a, b) => b.clashes - a.clashes);
+    
+    sortedProjects.forEach(project => {
+        const option = document.createElement('option');
+        option.value = project.project;
+        option.textContent = `${project.project} (${project.clashes} clashes, ${project.xClicks} x-clicks)`;
+        selector.appendChild(option);
+    });
+}
+
+loadProjectDetails(projectName) {
+    if (!projectName) {
+        // Hide details if no project selected
+        document.getElementById('projectStats').style.display = 'none';
+        document.getElementById('projectClashesContainer').style.display = 'none';
+        document.getElementById('noProjectSelected').style.display = 'block';
+        return;
+    }
+    
+    // Show loading state
+    document.getElementById('noProjectSelected').style.display = 'none';
+    document.getElementById('projectStats').style.display = 'block';
+    document.getElementById('projectClashesContainer').style.display = 'block';
+    
+    // Filter events for this project
+    const projectEvents = this.data.recentEvents.filter(event => 
+        event.project === projectName
+    );
+    
+    // Get project statistics
+    const projectStat = this.data.projectStats.find(p => p.project === projectName);
+    
+    // Update statistics cards
+    this.updateProjectStatistics(projectName, projectEvents, projectStat);
+    
+    // Update clashes table
+    this.updateProjectClashesTable(projectEvents);
+}
+
+updateProjectStatistics(projectName, events, projectStat) {
+    // Calculate statistics
+    const clashes = events.filter(e => e.type === 'clash').length;
+    const xClicks = events.filter(e => e.type === 'x_click').length;
+    const users = [...new Set(events.map(e => e.user))];
+    const lastEvent = events.length > 0 ? events[0] : null;
+    
+    // Update the cards
+    document.getElementById('projectTotalClashes').textContent = clashes;
+    document.getElementById('projectTotalXClicks').textContent = xClicks;
+    document.getElementById('projectActiveUsers').textContent = users.length;
+    
+    if (lastEvent) {
+        const lastDate = new Date(lastEvent.timestamp);
+        document.getElementById('projectLastActivity').textContent = lastDate.toLocaleString();
+    } else {
+        document.getElementById('projectLastActivity').textContent = 'No activity';
+    }
+}
+
+updateProjectClashesTable(events) {
+    const tbody = document.getElementById('projectClashesBody');
+    tbody.innerHTML = '';
+    
+    if (events.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                    No clash events found for this project
+                </td>
+            </tr>
+        `;
+        return;
+    }
+    
+    // Sort events by timestamp (newest first)
+    const sortedEvents = events.sort((a, b) => 
+        new Date(b.timestamp) - new Date(a.timestamp)
+    );
+    
+    sortedEvents.forEach(event => {
+        const row = document.createElement('tr');
+        const time = new Date(event.timestamp).toLocaleString();
+        
+        // Type badge
+        const typeBadge = event.type === 'clash' ? 
+            '<span class="badge badge-error">CLASH</span>' : 
+            '<span class="badge badge-warning">X-CLICK</span>';
+        
+        // Format element info
+        let elementDisplay = 'N/A';
+        if (event.elementInfo) {
+            const idMatch = event.elementInfo.match(/ID:\s*(\d+)/);
+            const categoryMatch = event.elementInfo.match(/Category:\s*([^,)]+)/);
+            if (idMatch || categoryMatch) {
+                elementDisplay = `<strong>ID: ${idMatch ? idMatch[1] : 'N/A'}</strong><br>
+                                 <small>${categoryMatch ? categoryMatch[1] : ''}</small>`;
+            } else {
+                elementDisplay = event.elementInfo;
+            }
+        } else if (event.type === 'x_click') {
+            elementDisplay = '<span style="color: var(--text-secondary);">Dialog close attempt</span>';
+        }
+        
+        // Format clashing elements
+        let clashDisplay = 'N/A';
+        if (event.clashingElements && event.clashingElements.length > 0) {
+            const count = event.clashingElements.length;
+            clashDisplay = `<strong>${count} element${count > 1 ? 's' : ''}</strong><br>`;
+            // Show first element
+            const firstElement = event.clashingElements[0];
+            const idMatch = firstElement.match(/ID:\s*(\d+)/);
+            clashDisplay += `<small>${idMatch ? 'ID: ' + idMatch[1] : firstElement.substring(0, 50)}</small>`;
+            if (count > 1) {
+                clashDisplay += `<br><small style="color: var(--text-secondary);">+${count - 1} more</small>`;
+            }
+        } else if (event.type === 'x_click') {
+            clashDisplay = '-';
+        }
+        
+        row.innerHTML = `
+            <td>${time}</td>
+            <td><strong>${event.user}</strong></td>
+            <td>${typeBadge}</td>
+            <td>${elementDisplay}</td>
+            <td>${clashDisplay}</td>
+        `;
+        
+        // Add hover effect
+        row.style.cursor = 'pointer';
+        row.title = 'Click for details';
+        
+        // Add click handler for clash events
+        if (event.type === 'clash' && event.elementInfo) {
+            row.onclick = () => this.showProjectClashDetails(event);
+        }
+        
+        tbody.appendChild(row);
+    });
+}
+
+showProjectClashDetails(event) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    
+    let clashList = '';
+    if (event.clashingElements && event.clashingElements.length > 0) {
+        clashList = event.clashingElements.map((el, idx) => 
+            `<li style="margin: 8px 0; padding: 8px; background: var(--background-color); 
+                       border-radius: 4px; font-family: monospace;">${idx + 1}. ${el}</li>`
+        ).join('');
+    } else {
+        clashList = '<li>No clashing elements recorded</li>';
+    }
+    
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>🚨 Clash Details - ${event.project}</h3>
+                <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+            </div>
+            <div class="modal-body" style="max-height: 600px; overflow-y: auto;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <strong>Time:</strong> ${new Date(event.timestamp).toLocaleString()}
+                    </div>
+                    <div>
+                        <strong>User:</strong> ${event.user}
+                    </div>
+                </div>
+                
+                <div style="padding: 1rem; background: var(--background-color); border-radius: 8px; margin-bottom: 1rem;">
+                    <h4 style="color: var(--danger-color); margin-bottom: 0.5rem;">📍 Element That Clashed</h4>
+                    <pre style="font-family: monospace; white-space: pre-wrap; margin: 0;">${event.elementInfo || 'No information available'}</pre>
+                </div>
+                
+                <div style="padding: 1rem; background: var(--background-color); border-radius: 8px;">
+                    <h4 style="color: var(--warning-color); margin-bottom: 0.5rem;">⚠️ Clashing With (${event.clashingElements?.length || 0} elements)</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        ${clashList}
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="this.closest('.modal').remove()">Close</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
 
     checkDataGrowthNotice() {
         const totalEvents = this.data?.recentEvents?.length || 0;
@@ -327,6 +528,7 @@ class ClashDashboard {
         this.updateTables(dataToUse);
         this.updateLastUpdated();
         this.updatePagination();
+        this.populateProjectSelector();
     }
 
     updateSummaryCards(data) {
