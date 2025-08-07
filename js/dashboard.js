@@ -621,6 +621,8 @@ class ClashDashboard {
                 <td>${time}</td>
                 <td>${event.user}</td>
                 <td>${event.project}</td>
+                <td>${event.elementInfo || 'N/A'}</td>
+                <td>${event.clashingElements ? event.clashingElements.length + ' elements' : 'N/A'}</td>
                 <td>${actionBadge}</td>
             `;
             tbody.appendChild(row);
