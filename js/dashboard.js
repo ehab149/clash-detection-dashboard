@@ -616,6 +616,34 @@ class ClashDashboard {
             const actionBadge = event.type === 'x_click' ? 
                 '<span class="badge badge-warning">X-Click</span>' : 
                 '<span class="badge badge-error">Clash</span>';
+            // Format element info for better display
+        let elementDisplay = 'N/A';
+        if (event.elementInfo) {
+            // Extract just the ID from the element info string
+            const idMatch = event.elementInfo.match(/ID:\s*(\d+)/);
+            const categoryMatch = event.elementInfo.match(/Category:\s*([^,)]+)/);
+            if (idMatch || categoryMatch) {
+                elementDisplay = `<strong>ID: ${idMatch ? idMatch[1] : 'N/A'}</strong><br>
+                                 <small>${categoryMatch ? categoryMatch[1] : ''}</small>`;
+            } else {
+                elementDisplay = event.elementInfo;
+            }
+        }
+
+        // Format clashing elements for better display
+        let clashDisplay = 'N/A';
+        if (event.clashingElements && event.clashingElements.length > 0) {
+            clashDisplay = `<span class="badge badge-error">${event.clashingElements.length}</span> elements<br>`;
+            // Show first 2 clashing elements
+            const preview = event.clashingElements.slice(0, 2).map(el => {
+                const idMatch = el.match(/ID:\s*(\d+)/);
+                return idMatch ? `ID: ${idMatch[1]}` : el;
+            }).join('<br>');
+            clashDisplay += `<small>${preview}</small>`;
+            if (event.clashingElements.length > 2) {
+                clashDisplay += `<br><small>+${event.clashingElements.length - 2} more</small>`;
+            }
+        }
 
             row.innerHTML = `
                 <td>${time}</td>
