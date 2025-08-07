@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-08-07T16:18:11.5456Z",
+  "lastUpdated": "2025-08-07T16:18:12.52457Z",
   "summary": {
-    "totalClashes": 31,
+    "totalClashes": 32,
     "totalXClicks": 33,
     "uniqueUsers": 1,
     "uniqueProjects": 5,
@@ -13,7 +13,7 @@
   "dailyStats": [
     {
       "date": "2025-08-07",
-      "clashes": 13,
+      "clashes": 14,
       "xClicks": 0,
       "users": [
         "ahmade"
@@ -84,21 +84,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 31,
+      "totalClashes": 32,
       "xClicks": 33,
       "mostActiveProject": "space test model-22",
-      "lastActivity": "2025-08-07T16:18:11.2636156Z"
+      "lastActivity": "2025-08-07T16:18:12.3259202Z"
     }
   ],
   "projectStats": [
     {
       "project": "mech 2",
-      "clashes": 15,
+      "clashes": 16,
       "xClicks": 0,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-08-07T16:18:11.2636156Z"
+      "lastClash": "2025-08-07T16:18:12.3259202Z"
     },
     {
       "project": "space test mech_ahmade57XZT",
@@ -138,6 +138,17 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-08-07T16:18:12.3259202Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "mech 2",
+      "action": "Clash Detected",
+      "elementInfo": "Air Terminals - ID: 1362559 - Name: 24 x 24 Face 12 x 12 Connection",
+      "clashingElements": [
+        "Structural Framing (ID: 288664) in arch test 2"
+      ]
+    },
     {
       "timestamp": "2025-08-07T16:18:11.2636156Z",
       "type": "clash",
