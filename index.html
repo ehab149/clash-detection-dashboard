@@ -160,6 +160,56 @@
                         <!-- Pagination controls will be inserted here -->
                     </div>
                 </div>
+                <!-- Project Details Section -->
+<section class="project-details-section" style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+    <div class="table-container">
+        <div class="table-header" style="background: linear-gradient(135deg, #2563eb, #10b981);">
+            <h3 style="color: white;">🏗️ Project Clash Details</h3>
+            <p style="color: rgba(255,255,255,0.9);">Select a project to view all its clash events</p>
+            
+            <!-- Project Selector -->
+            <div style="margin-top: 1rem;">
+                <select id="projectSelector" onchange="dashboard.loadProjectDetails(this.value)" 
+                        style="padding: 0.75rem; font-size: 1rem; width: 100%; max-width: 400px; 
+                               border-radius: 8px; border: 2px solid white;">
+                    <option value="">-- Select a Project --</option>
+                </select>
+            </div>
+        </div>
+        
+                <!-- Project Statistics -->
+                <div id="projectStats" style="display: none; padding: 1.5rem; background: var(--background-color);">
+                    <div class="summary-grid" style="margin-bottom: 1.5rem;">
+                        <div class="summary-card" style="padding: 1rem;">
+                            <div class="card-icon">🚨</div>
+                            <div class="card-content">
+                                <h3>Total Clashes</h3>
+                                <div class="card-value" id="projectTotalClashes">0</div>
+                            </div>
+                        </div>
+                        <div class="summary-card" style="padding: 1rem;">
+                            <div class="card-icon">❌</div>
+                            <div class="card-content">
+                                <h3>X-Clicks</h3>
+                                <div class="card-value" id="projectTotalXClicks">0</div>
+                            </div>
+                        </div>
+                        <div class="summary-card" style="padding: 1rem;">
+                            <div class="card-icon">👤</div>
+                            <div class="card-content">
+                                <h3>Active Users</h3>
+                                <div class="card-value" id="projectActiveUsers">0</div>
+                            </div>
+                        </div>
+                        <div class="summary-card" style="padding: 1rem;">
+                            <div class="card-icon">📅</div>
+                            <div class="card-content">
+                                <h3>Last Activity</h3>
+                                <div class="card-value" id="projectLastActivity" style="font-size: 0.9rem;">N/A</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- User Statistics -->
                 <div class="table-container">
@@ -185,28 +235,29 @@
                     </div>
                 </div>
 
-                <!-- Project Statistics -->
-                <div class="table-container">
-                    <div class="table-header">
-                        <h3>📋 Project Statistics</h3>
-                        <p>Cumulative project clash summary</p>
-                    </div>
+        <!-- Project Clashes Table -->
+                <div id="projectClashesContainer" style="display: none;">
                     <div class="table-wrapper">
-                        <table id="projectStatsTable">
+                        <table id="projectClashesTable">
                             <thead>
                                 <tr>
-                                    <th>Project</th>
-                                    <th>Total Clashes</th>
-                                    <th>X-Clicks</th>
-                                    <th>Active Users</th>
-                                    <th>Last Clash</th>
+                                    <th>Time</th>
+                                    <th>User</th>
+                                    <th>Type</th>
+                                    <th>Element Info</th>
+                                    <th>Clashing With</th>
                                 </tr>
                             </thead>
-                            <tbody id="projectStatsBody">
-                                <!-- Data will be loaded here -->
+                            <tbody id="projectClashesBody">
+                                <!-- Project clashes will be loaded here -->
                             </tbody>
                         </table>
                     </div>
+                </div>
+                
+                <!-- No Project Selected Message -->
+                <div id="noProjectSelected" style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                    <p style="font-size: 1.2rem;">📊 Select a project from the dropdown above to view its clash details</p>
                 </div>
             </div>
         </section>
