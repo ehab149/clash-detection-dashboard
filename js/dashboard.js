@@ -10,6 +10,8 @@ class ClashDashboard {
         this.filteredData = null;
         this.previousData = null; // 🆕 Track previous data for trend calculation
         this.init();
+        this.progressionView = 'cumulative'; // or 'daily'
+        this.selectedProgressionProject = 'all';
     }
 
     init() {
@@ -151,6 +153,283 @@ class ClashDashboard {
             return 'Data cleaned/filtered';
         }
     }
+    populateProgressionProjectSelector() {
+    const selector = document.getElementById('progressionProjectSelect');
+    if (!selector || !this.data) return;
+    
+    // Keep the "All Projects" option
+    selector.innerHTML = '<option value="all">All Projects</option>';
+    
+    // Add each project
+    const projects = this.data.projectStats || [];
+    projects.forEach(project => {
+        const option = document.createElement('option');
+        option.value = project.project;
+        option.textContent = project.project;
+        selector.appendChild(option);
+    });
+}
+
+// Create project progression chart
+createProjectProgressionChart() {
+    const ctx = document.getElementById('projectProgressionChart');
+    if (!ctx) return;
+    
+    if (this.charts.progression) {
+        this.charts.progression.destroy();
+    }
+
+    const data = this.prepareProgressionData();
+    
+    this.charts.progression = new Chart(ctx.getContext('2d'), {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: `${this.progressionView === 'cumulative' ? 'Cumulative' : 'Daily'} Clash Progression`,
+                    font: { size: 14 }
+                },
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(context) {
+                            return `Date: ${context[0].label}`;
+                        },
+                        label: function(context) {
+                            return `${context.dataset.label}: ${context.parsed.y} clashes`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Number of Clashes'
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Prepare data for progression chart
+prepareProgressionData() {
+    const dataToUse = this.filteredData || this.data;
+    if (!dataToUse || !dataToUse.recentEvents) return { labels: [], datasets: [] };
+    
+    // Group events by date and project
+    const eventsByDateAndProject = {};
+    const projects = new Set();
+    
+    dataToUse.recentEvents.forEach(event => {
+        if (event.type !== 'clash') return;
+        
+        const date = event.timestamp.split('T')[0];
+        const project = event.project;
+        
+        projects.add(project);
+        
+        if (!eventsByDateAndProject[date]) {
+            eventsByDateAndProject[date] = {};
+        }
+        
+        if (!eventsByDateAndProject[date][project]) {
+            eventsByDateAndProject[date][project] = 0;
+        }
+        
+        eventsByDateAndProject[date][project]++;
+    });
+    
+    // Get all dates and sort them
+    const allDates = Object.keys(eventsByDateAndProject).sort();
+    
+    // Filter projects based on selection
+    let projectsToShow = Array.from(projects);
+    if (this.selectedProgressionProject !== 'all') {
+        projectsToShow = [this.selectedProgressionProject];
+    }
+    
+    // Create datasets
+    const datasets = projectsToShow.map((project, index) => {
+        const data = [];
+        let cumulative = 0;
+        
+        allDates.forEach(date => {
+            const dailyCount = eventsByDateAndProject[date][project] || 0;
+            
+            if (this.progressionView === 'cumulative') {
+                cumulative += dailyCount;
+                data.push(cumulative);
+            } else {
+                data.push(dailyCount);
+            }
+        });
+        
+        // Generate color for each project
+        const colors = [
+            '#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
+            '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#14b8a6'
+        ];
+        
+        return {
+            label: project,
+            data: data,
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length] + '20',
+            tension: 0.4,
+            fill: false,
+            pointRadius: 3,
+            pointHoverRadius: 5
+        };
+    });
+    
+    return {
+        labels: allDates.map(date => new Date(date).toLocaleDateString()),
+        datasets: datasets
+    };
+}
+
+// Toggle between cumulative and daily view
+toggleProgressionView() {
+    this.progressionView = this.progressionView === 'cumulative' ? 'daily' : 'cumulative';
+    this.createProjectProgressionChart();
+}
+
+// Update progression chart for selected project
+updateProgressionChart(projectName) {
+    this.selectedProgressionProject = projectName;
+    this.createProjectProgressionChart();
+}
+
+// Calculate project trends
+calculateProjectTrends() {
+    const dataToUse = this.filteredData || this.data;
+    if (!dataToUse || !dataToUse.recentEvents) return [];
+    
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    const sixtyDaysAgo = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
+    
+    const projectTrends = {};
+    
+    // Calculate clashes for each period
+    dataToUse.recentEvents.forEach(event => {
+        if (event.type !== 'clash') return;
+        
+        const eventDate = new Date(event.timestamp);
+        const project = event.project;
+        
+        if (!projectTrends[project]) {
+            projectTrends[project] = {
+                last30Days: 0,
+                previous30Days: 0,
+                total: 0
+            };
+        }
+        
+        projectTrends[project].total++;
+        
+        if (eventDate >= thirtyDaysAgo) {
+            projectTrends[project].last30Days++;
+        } else if (eventDate >= sixtyDaysAgo) {
+            projectTrends[project].previous30Days++;
+        }
+    });
+    
+    // Calculate trend percentages
+    const trends = [];
+    for (const [project, data] of Object.entries(projectTrends)) {
+        let trendPercentage = 0;
+        let trendDirection = 'stable';
+        
+        if (data.previous30Days > 0) {
+            trendPercentage = ((data.last30Days - data.previous30Days) / data.previous30Days) * 100;
+            trendDirection = trendPercentage > 0 ? 'increasing' : 'decreasing';
+        } else if (data.last30Days > 0) {
+            trendDirection = 'new';
+            trendPercentage = 100;
+        }
+        
+        trends.push({
+            project: project,
+            last30Days: data.last30Days,
+            previous30Days: data.previous30Days,
+            total: data.total,
+            trendPercentage: Math.abs(trendPercentage),
+            trendDirection: trendDirection
+        });
+    }
+    
+    // Sort by most recent activity
+    return trends.sort((a, b) => b.last30Days - a.last30Days);
+}
+
+// Display project trend cards
+displayProjectTrends() {
+    const trendsGrid = document.getElementById('projectTrendsGrid');
+    if (!trendsGrid) return;
+    
+    const trends = this.calculateProjectTrends();
+    const topTrends = trends.slice(0, 4); // Show top 4 projects
+    
+    trendsGrid.innerHTML = '';
+    
+    topTrends.forEach(trend => {
+        const trendIcon = trend.trendDirection === 'increasing' ? '📈' : 
+                         trend.trendDirection === 'decreasing' ? '📉' : 
+                         trend.trendDirection === 'new' ? '🆕' : '➡️';
+        
+        const trendColor = trend.trendDirection === 'increasing' ? 'var(--danger-color)' : 
+                          trend.trendDirection === 'decreasing' ? 'var(--secondary-color)' : 
+                          'var(--warning-color)';
+        
+        const card = document.createElement('div');
+        card.className = 'summary-card';
+        card.style.cursor = 'pointer';
+        card.onclick = () => this.updateProgressionChart(trend.project);
+        
+        card.innerHTML = `
+            <div class="card-icon" style="font-size: 1.5rem;">${trendIcon}</div>
+            <div class="card-content">
+                <h3 style="font-size: 0.75rem; margin-bottom: 0.5rem;">${trend.project}</h3>
+                <div class="card-value" style="font-size: 1.5rem; color: ${trendColor};">
+                    ${trend.last30Days}
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                    Last 30 days
+                </div>
+                <div class="card-trend" style="background: ${trendColor}20; color: ${trendColor};">
+                    ${trend.trendDirection === 'new' ? 'New Project' : 
+                      trend.trendDirection === 'stable' ? 'Stable' :
+                      `${trend.trendPercentage.toFixed(0)}% ${trend.trendDirection}`}
+                </div>
+            </div>
+        `;
+        
+        trendsGrid.appendChild(card);
+    });
+}
     populateProjectSelector() {
     const selector = document.getElementById('projectSelector');
     if (!selector || !this.data) return;
@@ -528,6 +807,9 @@ showProjectClashDetails(event) {
         this.updateLastUpdated();
         this.updatePagination();
         this.populateProjectSelector();
+        this.populateProgressionProjectSelector();
+        this.createProjectProgressionChart();
+        this.displayProjectTrends();
     }
 
     updateSummaryCards(data) {
