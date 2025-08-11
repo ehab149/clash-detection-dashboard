@@ -10,7 +10,7 @@ class ClashDashboard {
         this.filteredData = null;
         this.previousData = null; // 🆕 Track previous data for trend calculation
         this.init();
-        this.progressionView = 'cumulative'; // or 'daily'
+        this.timeScale = 'monthly'; // 'daily', 'weekly', 'monthly', or 'yearly'
         this.selectedProgressionProject = 'all';
     }
 
@@ -194,38 +194,79 @@ createProjectProgressionChart() {
             plugins: {
                 title: {
                     display: true,
-                    text: `${this.progressionView === 'cumulative' ? 'Cumulative' : 'Daily'} Clash Progression`,
-                    font: { size: 14 }
+                    text: `Cumulative Clash Progression (${this.timeScale.charAt(0).toUpperCase() + this.timeScale.slice(1)})`,
+                    font: { 
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: 20
                 },
                 legend: {
                     position: 'top',
+                    labels: {
+                        padding: 15,
+                        usePointStyle: true,
+                        font: {
+                            size: 12
+                        }
+                    }
                 },
                 tooltip: {
                     callbacks: {
                         title: function(context) {
-                            return `Date: ${context[0].label}`;
+                            return context[0].label;
                         },
                         label: function(context) {
-                            return `${context.dataset.label}: ${context.parsed.y} clashes`;
+                            return `${context.dataset.label}: ${context.parsed.y} total clashes`;
                         }
-                    }
+                    },
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleFont: {
+                        size: 14
+                    },
+                    bodyFont: {
+                        size: 13
+                    },
+                    padding: 10,
+                    cornerRadius: 8
                 }
             },
             scales: {
                 x: {
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: this.timeScale === 'daily' ? 'Date' : 
+                              this.timeScale === 'weekly' ? 'Week' : 
+                              this.timeScale === 'monthly' ? 'Month' : 'Year',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    },
+                    ticks: {
+                        maxRotation: 45,
+                        minRotation: 45,
+                        autoSkip: true,
+                        maxTicksLimit: this.timeScale === 'daily' ? 15 : 12
                     }
                 },
                 y: {
                     title: {
                         display: true,
-                        text: 'Number of Clashes'
+                        text: 'Cumulative Number of Clashes',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
                     },
                     beginAtZero: true,
                     ticks: {
-                        stepSize: 1
+                        stepSize: 1,
+                        callback: function(value) {
+                            if (Number.isInteger(value)) {
+                                return value;
+                            }
+                        }
                     }
                 }
             }
@@ -238,31 +279,22 @@ prepareProgressionData() {
     const dataToUse = this.filteredData || this.data;
     if (!dataToUse || !dataToUse.recentEvents) return { labels: [], datasets: [] };
     
-    // Group events by date and project
-    const eventsByDateAndProject = {};
+    // Group events by project
+    const eventsByProject = {};
     const projects = new Set();
     
     dataToUse.recentEvents.forEach(event => {
         if (event.type !== 'clash') return;
         
-        const date = event.timestamp.split('T')[0];
         const project = event.project;
-        
         projects.add(project);
         
-        if (!eventsByDateAndProject[date]) {
-            eventsByDateAndProject[date] = {};
+        if (!eventsByProject[project]) {
+            eventsByProject[project] = [];
         }
         
-        if (!eventsByDateAndProject[date][project]) {
-            eventsByDateAndProject[date][project] = 0;
-        }
-        
-        eventsByDateAndProject[date][project]++;
+        eventsByProject[project].push(new Date(event.timestamp));
     });
-    
-    // Get all dates and sort them
-    const allDates = Object.keys(eventsByDateAndProject).sort();
     
     // Filter projects based on selection
     let projectsToShow = Array.from(projects);
@@ -270,20 +302,40 @@ prepareProgressionData() {
         projectsToShow = [this.selectedProgressionProject];
     }
     
+    // Get date range
+    const allDates = dataToUse.recentEvents.map(e => new Date(e.timestamp));
+    const minDate = new Date(Math.min(...allDates));
+    const maxDate = new Date(Math.max(...allDates));
+    
+    // Generate time periods based on scale
+    const { periods, labels } = this.generateTimePeriods(minDate, maxDate);
+    
     // Create datasets
     const datasets = projectsToShow.map((project, index) => {
+        const projectEvents = eventsByProject[project] || [];
         const data = [];
         let cumulative = 0;
         
-        allDates.forEach(date => {
-            const dailyCount = eventsByDateAndProject[date][project] || 0;
+        periods.forEach(period => {
+            // Count events in this period
+            const eventsInPeriod = projectEvents.filter(eventDate => {
+                if (this.timeScale === 'daily') {
+                    return eventDate.toDateString() === period.toDateString();
+                } else if (this.timeScale === 'weekly') {
+                    const weekStart = new Date(period);
+                    const weekEnd = new Date(period);
+                    weekEnd.setDate(weekEnd.getDate() + 7);
+                    return eventDate >= weekStart && eventDate < weekEnd;
+                } else if (this.timeScale === 'monthly') {
+                    return eventDate.getMonth() === period.getMonth() && 
+                           eventDate.getFullYear() === period.getFullYear();
+                } else if (this.timeScale === 'yearly') {
+                    return eventDate.getFullYear() === period.getFullYear();
+                }
+            }).length;
             
-            if (this.progressionView === 'cumulative') {
-                cumulative += dailyCount;
-                data.push(cumulative);
-            } else {
-                data.push(dailyCount);
-            }
+            cumulative += eventsInPeriod;
+            data.push(cumulative);
         });
         
         // Generate color for each project
@@ -299,20 +351,68 @@ prepareProgressionData() {
             backgroundColor: colors[index % colors.length] + '20',
             tension: 0.4,
             fill: false,
-            pointRadius: 3,
-            pointHoverRadius: 5
+            pointRadius: this.timeScale === 'yearly' ? 5 : 3,
+            pointHoverRadius: 7,
+            borderWidth: 2
         };
     });
     
     return {
-        labels: allDates.map(date => new Date(date).toLocaleDateString()),
+        labels: labels,
         datasets: datasets
     };
 }
 
-// Toggle between cumulative and daily view
-toggleProgressionView() {
-    this.progressionView = this.progressionView === 'cumulative' ? 'daily' : 'cumulative';
+    // Add new method to generate time periods
+generateTimePeriods(startDate, endDate) {
+    const periods = [];
+    const labels = [];
+    
+    if (this.timeScale === 'daily') {
+        // Generate daily periods
+        const current = new Date(startDate);
+        while (current <= endDate) {
+            periods.push(new Date(current));
+            labels.push(current.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            current.setDate(current.getDate() + 1);
+        }
+    } else if (this.timeScale === 'weekly') {
+        // Generate weekly periods (start from Sunday)
+        const current = new Date(startDate);
+        current.setDate(current.getDate() - current.getDay()); // Go to Sunday
+        
+        while (current <= endDate) {
+            periods.push(new Date(current));
+            const weekEnd = new Date(current);
+            weekEnd.setDate(weekEnd.getDate() + 6);
+            labels.push(`Week of ${current.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`);
+            current.setDate(current.getDate() + 7);
+        }
+    } else if (this.timeScale === 'monthly') {
+        // Generate monthly periods
+        const current = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+        
+        while (current <= endDate) {
+            periods.push(new Date(current));
+            labels.push(current.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
+            current.setMonth(current.getMonth() + 1);
+        }
+    } else if (this.timeScale === 'yearly') {
+        // Generate yearly periods
+        const current = new Date(startDate.getFullYear(), 0, 1);
+        
+        while (current <= endDate) {
+            periods.push(new Date(current));
+            labels.push(current.getFullYear().toString());
+            current.setFullYear(current.getFullYear() + 1);
+        }
+    }
+    
+    return { periods, labels };
+}
+
+updateTimeScale(scale) {
+    this.timeScale = scale;
     this.createProjectProgressionChart();
 }
 
@@ -800,16 +900,13 @@ showProjectClashDetails(event) {
     }
 
     updateDashboard() {
-        const dataToUse = this.filteredData || this.data;
-        this.updateSummaryCards(dataToUse);
-        this.updateCharts(dataToUse);
-        this.updateTables(dataToUse);
-        this.updateLastUpdated();
-        this.updatePagination();
-        this.populateProjectSelector();
-        this.populateProgressionProjectSelector();
-        this.createProjectProgressionChart();
-        this.displayProjectTrends();
+    const dataToUse = this.filteredData || this.data;
+    this.updateSummaryCards(dataToUse);
+    this.updateCharts(dataToUse);
+    this.updateTables(dataToUse);
+    this.updateLastUpdated();
+    this.updatePagination();
+    this.populateProjectSelector();
     }
 
     updateSummaryCards(data) {
