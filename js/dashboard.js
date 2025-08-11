@@ -81,7 +81,7 @@ class ClashDashboard {
             
             // Add cache busting to ensure fresh data
             const timestamp = new Date().getTime();
-            const response = await fetch(`./data/logs.json?t=${timestamp}`);
+            const response = await fetch(`/clash-detection-dashboard/data/logs.json?t=${timestamp}`);
             
             if (!response.ok) {
                 // If no data file exists, use sample data
