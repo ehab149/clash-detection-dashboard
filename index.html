@@ -116,6 +116,34 @@
                     <canvas id="userActivityChart"></canvas>
                 </div>
 
+                                <!-- Add this new chart in the charts-section, after the existing charts -->
+                <div class="chart-container" style="grid-column: 1 / -1;"> <!-- Full width -->
+                    <div class="chart-header">
+                        <h3>📊 Project Progression Over Time</h3>
+                        <p>Track clash trends and resolution progress for each project</p>
+                        <div style="margin-top: 10px;">
+                            <select id="progressionProjectSelect" onchange="dashboard.updateProgressionChart(this.value)" 
+                                    style="padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <option value="all">All Projects</option>
+                            </select>
+                            <button onclick="dashboard.toggleProgressionView()" 
+                                    style="margin-left: 10px; padding: 0.5rem 1rem; border-radius: 8px; 
+                                           background: var(--primary-color); color: white; border: none; cursor: pointer;">
+                                Toggle: Cumulative/Daily
+                            </button>
+                        </div>
+                    </div>
+                    <canvas id="projectProgressionChart"></canvas>
+                </div>
+                
+                <!-- Add Project Metrics Cards -->
+                <div class="summary-section" style="padding-top: 0;">
+                    <h3 style="margin-bottom: 1rem;">📈 Project Trends (Last 30 Days)</h3>
+                    <div class="summary-grid" id="projectTrendsGrid">
+                        <!-- Project trend cards will be inserted here -->
+                    </div>
+                </div>
+
                 <!-- Project Distribution Chart -->
                 <div class="chart-container">
                     <div class="chart-header">
