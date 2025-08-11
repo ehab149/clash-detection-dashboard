@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-08-11T17:31:07.7983216Z",
+  "lastUpdated": "2025-08-11T17:31:08.8195651Z",
   "summary": {
-    "totalClashes": 34,
+    "totalClashes": 35,
     "totalXClicks": 33,
     "uniqueUsers": 1,
     "uniqueProjects": 5,
@@ -13,7 +13,7 @@
   "dailyStats": [
     {
       "date": "2025-08-11",
-      "clashes": 1,
+      "clashes": 2,
       "xClicks": 0,
       "users": [
         "ahmade"
@@ -95,21 +95,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 34,
+      "totalClashes": 35,
       "xClicks": 33,
       "mostActiveProject": "space test model-22",
-      "lastActivity": "2025-08-11T17:31:07.3928632Z"
+      "lastActivity": "2025-08-11T17:31:08.6237099Z"
     }
   ],
   "projectStats": [
     {
       "project": "mech 2",
-      "clashes": 18,
+      "clashes": 19,
       "xClicks": 0,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-08-11T17:31:07.3928632Z"
+      "lastClash": "2025-08-11T17:31:08.6237099Z"
     },
     {
       "project": "space test mech_ahmade57XZT",
@@ -149,6 +149,18 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-08-11T17:31:08.6237099Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "mech 2",
+      "action": "Clash Detected",
+      "elementInfo": "Ducts - ID: 1362449 - Name: Radius Elbows / Tees - Size: 305x305mm",
+      "clashingElements": [
+        "Structural Framing (ID: 288372) in arch test 2",
+        "Structural Framing (ID: 288633) in arch test 2"
+      ]
+    },
     {
       "timestamp": "2025-08-11T17:31:07.3928632Z",
       "type": "clash",
