@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-08-12T17:35:34.8661757Z",
+  "lastUpdated": "2025-08-12T17:38:21.8449437Z",
   "summary": {
-    "totalClashes": 52,
+    "totalClashes": 53,
     "totalXClicks": 35,
     "uniqueUsers": 1,
     "uniqueProjects": 5,
@@ -13,12 +13,13 @@
   "dailyStats": [
     {
       "date": "2025-08-12",
-      "clashes": 13,
+      "clashes": 14,
       "xClicks": 2,
       "users": [
         "ahmade"
       ],
       "projects": [
+        "space test model-22",
         "mech 2"
       ]
     },
@@ -106,13 +107,22 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 52,
+      "totalClashes": 53,
       "xClicks": 35,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-08-12T17:35:34.6383159Z"
+      "lastActivity": "2025-08-12T17:38:21.6591979Z"
     }
   ],
   "projectStats": [
+    {
+      "project": "space test model-22",
+      "clashes": 11,
+      "xClicks": 18,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-08-12T17:38:21.6591979Z"
+    },
     {
       "project": "mech 2",
       "clashes": 36,
@@ -130,15 +140,6 @@
         "ahmade"
       ],
       "lastClash": "2025-08-05T20:02:48.2083942Z"
-    },
-    {
-      "project": "space test model-22",
-      "clashes": 10,
-      "xClicks": 18,
-      "users": [
-        "ahmade"
-      ],
-      "lastClash": "2025-08-05T17:13:28.0768437Z"
     },
     {
       "project": "29192E_JBB_E23_726 Madison - JPMC Private Club",
@@ -160,6 +161,17 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-08-12T17:38:21.6591979Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Clash Detected",
+      "elementInfo": "Air Terminals - ID: 1109526 - Name: 24x24",
+      "clashingElements": [
+        "W12X26 (ID: 357800) in arch 2-22"
+      ]
+    },
     {
       "timestamp": "2025-08-12T17:35:34.6383159Z",
       "type": "x_click",
