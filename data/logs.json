@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2025-08-12T17:35:31.4732741Z",
+  "lastUpdated": "2025-08-12T17:35:34.8661757Z",
   "summary": {
     "totalClashes": 52,
-    "totalXClicks": 34,
+    "totalXClicks": 35,
     "uniqueUsers": 1,
     "uniqueProjects": 5,
     "dateRange": {
@@ -14,7 +14,7 @@
     {
       "date": "2025-08-12",
       "clashes": 13,
-      "xClicks": 1,
+      "xClicks": 2,
       "users": [
         "ahmade"
       ],
@@ -107,16 +107,16 @@
     {
       "user": "ahmade",
       "totalClashes": 52,
-      "xClicks": 34,
+      "xClicks": 35,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-08-12T17:35:31.2759597Z"
+      "lastActivity": "2025-08-12T17:35:34.6383159Z"
     }
   ],
   "projectStats": [
     {
       "project": "mech 2",
       "clashes": 36,
-      "xClicks": 1,
+      "xClicks": 2,
       "users": [
         "ahmade"
       ],
@@ -160,6 +160,15 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-08-12T17:35:34.6383159Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "mech 2",
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
+    },
     {
       "timestamp": "2025-08-12T17:35:31.2759597Z",
       "type": "x_click",
