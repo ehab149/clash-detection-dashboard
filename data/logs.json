@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-08-25T15:30:43.2087048Z",
+  "lastUpdated": "2025-08-25T15:30:44.6357349Z",
   "summary": {
-    "totalClashes": 55,
+    "totalClashes": 56,
     "totalXClicks": 37,
     "uniqueUsers": 1,
     "uniqueProjects": 5,
@@ -13,7 +13,7 @@
   "dailyStats": [
     {
       "date": "2025-08-25",
-      "clashes": 1,
+      "clashes": 2,
       "xClicks": 0,
       "users": [
         "ahmade"
@@ -129,21 +129,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 55,
+      "totalClashes": 56,
       "xClicks": 37,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-08-25T15:30:43.0480238Z"
+      "lastActivity": "2025-08-25T15:30:44.4025159Z"
     }
   ],
   "projectStats": [
     {
       "project": "space test model-22",
-      "clashes": 13,
+      "clashes": 14,
       "xClicks": 20,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-08-25T15:30:43.0480238Z"
+      "lastClash": "2025-08-25T15:30:44.4025159Z"
     },
     {
       "project": "mech 2",
@@ -183,6 +183,17 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-08-25T15:30:44.4025159Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22",
+      "action": "Clash Detected",
+      "elementInfo": "Air Terminals - ID: 1093738 - Name: 12x12",
+      "clashingElements": [
+        "Structural Framing (ID: 357800) in arch 2-22"
+      ]
+    },
     {
       "timestamp": "2025-08-25T15:30:43.0480238Z",
       "type": "clash",
