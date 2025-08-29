@@ -1,16 +1,27 @@
 {
-  "lastUpdated": "2025-08-25T15:30:45.7329485Z",
+  "lastUpdated": "2025-08-29T15:24:46.506481Z",
   "summary": {
-    "totalClashes": 57,
+    "totalClashes": 58,
     "totalXClicks": 37,
     "uniqueUsers": 1,
-    "uniqueProjects": 5,
+    "uniqueProjects": 6,
     "dateRange": {
       "start": "2025-07-01",
-      "end": "2025-08-25"
+      "end": "2025-08-29"
     }
   },
   "dailyStats": [
+    {
+      "date": "2025-08-29",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "projects": [
+        "space test model-22_ahmade57XZT"
+      ]
+    },
     {
       "date": "2025-08-25",
       "clashes": 3,
@@ -129,13 +140,22 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 57,
+      "totalClashes": 58,
       "xClicks": 37,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-08-25T15:30:45.5101649Z"
+      "lastActivity": "2025-08-29T15:24:46.059043Z"
     }
   ],
   "projectStats": [
+    {
+      "project": "space test model-22_ahmade57XZT",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-08-29T15:24:46.059043Z"
+    },
     {
       "project": "space test model-22",
       "clashes": 15,
@@ -183,6 +203,17 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-08-29T15:24:46.059043Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22_ahmade57XZT",
+      "action": "Clash Detected",
+      "elementInfo": "Air Terminals - ID: 1093736 - Name: 30x30-15 Neck",
+      "clashingElements": [
+        "Structural Framing (ID: 358361) in arch 2-22"
+      ]
+    },
     {
       "timestamp": "2025-08-25T15:30:45.5101649Z",
       "type": "clash",
