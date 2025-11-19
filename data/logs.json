@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-11-19T17:15:51.362518Z",
+  "lastUpdated": "2025-11-19T20:26:53.2140171Z",
   "summary": {
-    "totalClashes": 71,
+    "totalClashes": 72,
     "totalXClicks": 39,
     "uniqueUsers": 1,
     "uniqueProjects": 7,
@@ -13,7 +13,7 @@
   "dailyStats": [
     {
       "date": "2025-11-19",
-      "clashes": 5,
+      "clashes": 6,
       "xClicks": 2,
       "users": [
         "ahmade"
@@ -151,21 +151,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 71,
+      "totalClashes": 72,
       "xClicks": 39,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-11-19T17:15:51.1603819Z"
+      "lastActivity": "2025-11-19T20:26:52.7852097Z"
     }
   ],
   "projectStats": [
     {
       "project": "JBB_Av_Addin test_ahmade57XZT",
-      "clashes": 5,
+      "clashes": 6,
       "xClicks": 2,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-11-19T17:15:51.1603819Z"
+      "lastClash": "2025-11-19T20:26:52.7852097Z"
     },
     {
       "project": "space test model-22_ahmade57XZT",
@@ -223,6 +223,19 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-11-19T20:26:52.7852097Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "JBB_Av_Addin test_ahmade57XZT",
+      "action": "Clash Detected",
+      "elementInfo": "gusset plate (ID: 1369494, Category: Generic Models)",
+      "clashingElements": [
+        "W10X49 (ID: 571853)",
+        "W12X26 (ID: 572007)",
+        "W12X26 (ID: 572621)"
+      ]
+    },
     {
       "timestamp": "2025-11-19T17:15:51.1603819Z",
       "type": "clash",
