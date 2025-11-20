@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2025-11-20T15:21:12.0617505Z",
+  "lastUpdated": "2025-11-20T15:21:16.0230667Z",
   "summary": {
     "totalClashes": 77,
-    "totalXClicks": 39,
+    "totalXClicks": 40,
     "uniqueUsers": 1,
     "uniqueProjects": 7,
     "dateRange": {
@@ -14,7 +14,7 @@
     {
       "date": "2025-11-20",
       "clashes": 1,
-      "xClicks": 0,
+      "xClicks": 1,
       "users": [
         "ahmade"
       ],
@@ -163,16 +163,16 @@
     {
       "user": "ahmade",
       "totalClashes": 77,
-      "xClicks": 39,
+      "xClicks": 40,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-11-20T15:21:11.6557976Z"
+      "lastActivity": "2025-11-20T15:21:15.8110872Z"
     }
   ],
   "projectStats": [
     {
       "project": "JBB_Av_Addin test_ahmade57XZT",
       "clashes": 11,
-      "xClicks": 2,
+      "xClicks": 3,
       "users": [
         "ahmade"
       ],
@@ -234,6 +234,15 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-11-20T15:21:15.8110872Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "JBB_Av_Addin test_ahmade57XZT",
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
+    },
     {
       "timestamp": "2025-11-20T15:21:11.6557976Z",
       "type": "clash",
