@@ -1,16 +1,27 @@
 {
-  "lastUpdated": "2025-11-19T20:27:05.5985657Z",
+  "lastUpdated": "2025-11-20T15:21:12.0617505Z",
   "summary": {
-    "totalClashes": 76,
+    "totalClashes": 77,
     "totalXClicks": 39,
     "uniqueUsers": 1,
     "uniqueProjects": 7,
     "dateRange": {
       "start": "2025-07-01",
-      "end": "2025-11-19"
+      "end": "2025-11-20"
     }
   },
   "dailyStats": [
+    {
+      "date": "2025-11-20",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "projects": [
+        "JBB_Av_Addin test_ahmade57XZT"
+      ]
+    },
     {
       "date": "2025-11-19",
       "clashes": 10,
@@ -151,21 +162,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 76,
+      "totalClashes": 77,
       "xClicks": 39,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-11-19T20:27:05.3863053Z"
+      "lastActivity": "2025-11-20T15:21:11.6557976Z"
     }
   ],
   "projectStats": [
     {
       "project": "JBB_Av_Addin test_ahmade57XZT",
-      "clashes": 10,
+      "clashes": 11,
       "xClicks": 2,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-11-19T20:27:05.3863053Z"
+      "lastClash": "2025-11-20T15:21:11.6557976Z"
     },
     {
       "project": "space test model-22_ahmade57XZT",
@@ -223,6 +234,20 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-11-20T15:21:11.6557976Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "JBB_Av_Addin test_ahmade57XZT",
+      "action": "Clash Detected",
+      "elementInfo": "gusset plate (ID: 1369500, Category: Generic Models)",
+      "clashingElements": [
+        "W10X49 (ID: 571941)",
+        "W12X26 (ID: 572007)",
+        "W12X26 (ID: 572421)",
+        "W12X26 (ID: 574063)"
+      ]
+    },
     {
       "timestamp": "2025-11-19T20:27:05.3863053Z",
       "type": "clash",
