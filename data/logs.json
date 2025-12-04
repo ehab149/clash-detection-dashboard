@@ -1,16 +1,27 @@
 {
-  "lastUpdated": "2025-11-20T19:52:58.6338819Z",
+  "lastUpdated": "2025-12-04T18:33:52.4115687Z",
   "summary": {
-    "totalClashes": 84,
+    "totalClashes": 85,
     "totalXClicks": 41,
     "uniqueUsers": 1,
     "uniqueProjects": 7,
     "dateRange": {
       "start": "2025-07-01",
-      "end": "2025-11-20"
+      "end": "2025-12-04"
     }
   },
   "dailyStats": [
+    {
+      "date": "2025-12-04",
+      "clashes": 1,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "projects": [
+        "space test model-22_ahmade57XZT"
+      ]
+    },
     {
       "date": "2025-11-20",
       "clashes": 8,
@@ -162,13 +173,22 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 84,
+      "totalClashes": 85,
       "xClicks": 41,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-11-20T19:52:58.4432545Z"
+      "lastActivity": "2025-12-04T18:33:52.1290116Z"
     }
   ],
   "projectStats": [
+    {
+      "project": "space test model-22_ahmade57XZT",
+      "clashes": 10,
+      "xClicks": 0,
+      "users": [
+        "ahmade"
+      ],
+      "lastClash": "2025-12-04T18:33:52.1290116Z"
+    },
     {
       "project": "JBB_Av_Addin test_ahmade57XZT",
       "clashes": 18,
@@ -177,15 +197,6 @@
         "ahmade"
       ],
       "lastClash": "2025-11-20T19:52:58.4432545Z"
-    },
-    {
-      "project": "space test model-22_ahmade57XZT",
-      "clashes": 9,
-      "xClicks": 0,
-      "users": [
-        "ahmade"
-      ],
-      "lastClash": "2025-08-29T15:45:24.927174Z"
     },
     {
       "project": "space test model-22",
@@ -234,6 +245,17 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-12-04T18:33:52.1290116Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22_ahmade57XZT",
+      "action": "Clash Detected",
+      "elementInfo": "Air Terminals - ID: 1093736 - Name: 30x30-15 Neck",
+      "clashingElements": [
+        "Structural Framing (ID: 358361) in arch 2-22"
+      ]
+    },
     {
       "timestamp": "2025-11-20T19:52:58.4432545Z",
       "type": "clash",
