@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-12-04T18:33:53.24892Z",
+  "lastUpdated": "2025-12-04T18:33:54.0697429Z",
   "summary": {
-    "totalClashes": 86,
+    "totalClashes": 87,
     "totalXClicks": 41,
     "uniqueUsers": 1,
     "uniqueProjects": 7,
@@ -13,7 +13,7 @@
   "dailyStats": [
     {
       "date": "2025-12-04",
-      "clashes": 2,
+      "clashes": 3,
       "xClicks": 0,
       "users": [
         "ahmade"
@@ -173,21 +173,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 86,
+      "totalClashes": 87,
       "xClicks": 41,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2025-12-04T18:33:53.0471807Z"
+      "lastActivity": "2025-12-04T18:33:53.8781967Z"
     }
   ],
   "projectStats": [
     {
       "project": "space test model-22_ahmade57XZT",
-      "clashes": 11,
+      "clashes": 12,
       "xClicks": 0,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2025-12-04T18:33:53.0471807Z"
+      "lastClash": "2025-12-04T18:33:53.8781967Z"
     },
     {
       "project": "JBB_Av_Addin test_ahmade57XZT",
@@ -245,6 +245,17 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2025-12-04T18:33:53.8781967Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "space test model-22_ahmade57XZT",
+      "action": "Clash Detected",
+      "elementInfo": "Air Terminals - ID: 1093739 - Name: 24x24",
+      "clashingElements": [
+        "Structural Framing (ID: 358361) in arch 2-22"
+      ]
+    },
     {
       "timestamp": "2025-12-04T18:33:53.0471807Z",
       "type": "clash",
