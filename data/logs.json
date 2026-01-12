@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2026-01-12T19:44:09.4824103Z",
+  "lastUpdated": "2026-01-12T19:44:21.6975367Z",
   "summary": {
-    "totalClashes": 91,
+    "totalClashes": 92,
     "totalXClicks": 41,
     "uniqueUsers": 1,
     "uniqueProjects": 8,
@@ -13,7 +13,7 @@
   "dailyStats": [
     {
       "date": "2026-01-12",
-      "clashes": 1,
+      "clashes": 2,
       "xClicks": 0,
       "users": [
         "ahmade"
@@ -184,21 +184,21 @@
   "userActivity": [
     {
       "user": "ahmade",
-      "totalClashes": 91,
+      "totalClashes": 92,
       "xClicks": 41,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2026-01-12T19:44:09.236102Z"
+      "lastActivity": "2026-01-12T19:44:21.5949498Z"
     }
   ],
   "projectStats": [
     {
       "project": "JBB_MEPFP_Master_2026_Test_ahmade57XZT",
-      "clashes": 1,
+      "clashes": 2,
       "xClicks": 0,
       "users": [
         "ahmade"
       ],
-      "lastClash": "2026-01-12T19:44:09.236102Z"
+      "lastClash": "2026-01-12T19:44:21.5949498Z"
     },
     {
       "project": "space test model-22_ahmade57XZT",
@@ -265,6 +265,17 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2026-01-12T19:44:21.5949498Z",
+      "type": "clash",
+      "user": "ahmade",
+      "project": "JBB_MEPFP_Master_2026_Test_ahmade57XZT",
+      "action": "Clash Detected",
+      "elementInfo": "Space 2 (ID: 1285131, Category: Spaces)",
+      "clashingElements": [
+        "W14X43 (ID: 571972)"
+      ]
+    },
     {
       "timestamp": "2026-01-12T19:44:09.236102Z",
       "type": "clash",
