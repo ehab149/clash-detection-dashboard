@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-01-12T19:44:21.6975367Z",
+  "lastUpdated": "2026-01-12T19:44:25.8749018Z",
   "summary": {
     "totalClashes": 92,
-    "totalXClicks": 41,
+    "totalXClicks": 42,
     "uniqueUsers": 1,
     "uniqueProjects": 8,
     "dateRange": {
@@ -14,7 +14,7 @@
     {
       "date": "2026-01-12",
       "clashes": 2,
-      "xClicks": 0,
+      "xClicks": 1,
       "users": [
         "ahmade"
       ],
@@ -185,16 +185,16 @@
     {
       "user": "ahmade",
       "totalClashes": 92,
-      "xClicks": 41,
+      "xClicks": 42,
       "mostActiveProject": "mech 2",
-      "lastActivity": "2026-01-12T19:44:21.5949498Z"
+      "lastActivity": "2026-01-12T19:44:25.7767993Z"
     }
   ],
   "projectStats": [
     {
       "project": "JBB_MEPFP_Master_2026_Test_ahmade57XZT",
       "clashes": 2,
-      "xClicks": 0,
+      "xClicks": 1,
       "users": [
         "ahmade"
       ],
@@ -265,6 +265,15 @@
     }
   ],
   "recentEvents": [
+    {
+      "timestamp": "2026-01-12T19:44:25.7767993Z",
+      "type": "x_click",
+      "user": "ahmade",
+      "project": "JBB_MEPFP_Master_2026_Test_ahmade57XZT",
+      "action": "Dialog Close Attempt (Prevented)",
+      "elementInfo": null,
+      "clashingElements": null
+    },
     {
       "timestamp": "2026-01-12T19:44:21.5949498Z",
       "type": "clash",
